@@ -1,0 +1,364 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name"
+		},
+		"Input_Data": {
+			"type": "string"
+		},
+		"Output_Data": {
+			"type": "string"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/DL_DL_AL002_Raw_Stage')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "ADL002_BioMarker",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow2",
+								"type": "DataFlowReference"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Input_Source",
+								"type": "DatasetReference"
+							},
+							"name": "AL002Prod"
+						},
+						{
+							"dataset": {
+								"referenceName": "Input_Dose",
+								"type": "DatasetReference"
+							},
+							"name": "AL002Dose"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "FinalOutputFile_DS",
+								"type": "DatasetReference"
+							},
+							"name": "FinalOutputFile"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Days"
+						},
+						{
+							"name": "RESULTS"
+						},
+						{
+							"name": "VisitHours"
+						},
+						{
+							"name": "Join1"
+						}
+					],
+					"script": "source(output(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL002Prod\nsource(output(\n\t\tSUBJID as string,\n\t\tdose as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL002Dose\nAL002Prod derive(Days = toInteger(trim(substring(VISIT,4,length(VISIT)-3)))) ~> Days\nDays derive(RESULTS = iif(lesserOrEqual(toFloat(replace(RESULT,'<','')),20.0),divide(toFloat(LLOQ),2),toFloat(replace(RESULT,'<','')))) ~> RESULTS\nRESULTS derive(VisitHours = case(trim(TPT) == \"Predose\", 0,trim(TPT) == \"End of Infusion (EOI)\",1,isNull(trim(TPT)),minus(multiply(Days,24),24),toInteger(rtrim(trim(TPT),\"hr\")))) ~> VisitHours\nAL002Dose, VisitHours join(AL002Dose@SUBJID == AL002Prod@SUBJID,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join1\nJoin1 sink(input(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string,\n\t\tdose as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinalOutputFile"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Input_Source')]",
+				"[concat(variables('factoryId'), '/datasets/Input_Dose')]",
+				"[concat(variables('factoryId'), '/datasets/FinalOutputFile_DS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Input_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('Input_Data')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL002-1_PROD_Icon_PK_SERUM_FULL_31102019.csv",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "STUDYID",
+						"type": "String"
+					},
+					{
+						"name": "SITEID",
+						"type": "String"
+					},
+					{
+						"name": "SUBJID",
+						"type": "String"
+					},
+					{
+						"name": "COHORT",
+						"type": "String"
+					},
+					{
+						"name": "VISIT",
+						"type": "String"
+					},
+					{
+						"name": "TPT",
+						"type": "String"
+					},
+					{
+						"name": "DAT",
+						"type": "String"
+					},
+					{
+						"name": "TIM",
+						"type": "String"
+					},
+					{
+						"name": "SPEC",
+						"type": "String"
+					},
+					{
+						"name": "TEST",
+						"type": "String"
+					},
+					{
+						"name": "RESULT",
+						"type": "String"
+					},
+					{
+						"name": "UNIT",
+						"type": "String"
+					},
+					{
+						"name": "LLOQ",
+						"type": "String"
+					},
+					{
+						"name": "COMMENT",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Input_Dose')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('Input_Data')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL002_Dose_by_subject.csv",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": "|",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "STUDYID",
+						"type": "String"
+					},
+					{
+						"name": "SITEID",
+						"type": "String"
+					},
+					{
+						"name": "SUBJID",
+						"type": "String"
+					},
+					{
+						"name": "COHORT",
+						"type": "String"
+					},
+					{
+						"name": "VISIT",
+						"type": "String"
+					},
+					{
+						"name": "TPT",
+						"type": "String"
+					},
+					{
+						"name": "DAT",
+						"type": "String"
+					},
+					{
+						"name": "TIM",
+						"type": "String"
+					},
+					{
+						"name": "SPEC",
+						"type": "String"
+					},
+					{
+						"name": "TEST",
+						"type": "String"
+					},
+					{
+						"name": "RESULT",
+						"type": "String"
+					},
+					{
+						"name": "UNIT",
+						"type": "String"
+					},
+					{
+						"name": "LLOQ",
+						"type": "String"
+					},
+					{
+						"name": "COMMENT",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FinalOutputFile_DS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "[parameters('Output_Data')]",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "stage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "STUDYID",
+						"type": "String"
+					},
+					{
+						"name": "SITEID",
+						"type": "String"
+					},
+					{
+						"name": "SUBJID",
+						"type": "String"
+					},
+					{
+						"name": "COHORT",
+						"type": "String"
+					},
+					{
+						"name": "VISIT",
+						"type": "String"
+					},
+					{
+						"name": "TPT",
+						"type": "String"
+					},
+					{
+						"name": "DAT",
+						"type": "String"
+					},
+					{
+						"name": "TIM",
+						"type": "String"
+					},
+					{
+						"name": "SPEC",
+						"type": "String"
+					},
+					{
+						"name": "TEST",
+						"type": "String"
+					},
+					{
+						"name": "RESULT",
+						"type": "String"
+					},
+					{
+						"name": "UNIT",
+						"type": "String"
+					},
+					{
+						"name": "LLOQ",
+						"type": "String"
+					},
+					{
+						"name": "COMMENT",
+						"type": "String"
+					},
+					{
+						"name": "dose",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		}
+	]
+}
