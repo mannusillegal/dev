@@ -1,0 +1,81 @@
+{
+	"name": "Source1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Ls1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "AL002-1_PROD_Icon_PK_SERUM_FULL_31102019.csv",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "STUDYID",
+				"type": "String"
+			},
+			{
+				"name": "SITEID",
+				"type": "String"
+			},
+			{
+				"name": "SUBJID",
+				"type": "String"
+			},
+			{
+				"name": "COHORT",
+				"type": "String"
+			},
+			{
+				"name": "VISIT",
+				"type": "String"
+			},
+			{
+				"name": "TPT",
+				"type": "String"
+			},
+			{
+				"name": "DAT",
+				"type": "String"
+			},
+			{
+				"name": "TIM",
+				"type": "String"
+			},
+			{
+				"name": "SPEC",
+				"type": "String"
+			},
+			{
+				"name": "TEST",
+				"type": "String"
+			},
+			{
+				"name": "RESULT",
+				"type": "String"
+			},
+			{
+				"name": "UNIT",
+				"type": "String"
+			},
+			{
+				"name": "LLOQ",
+				"type": "String"
+			},
+			{
+				"name": "COMMENT",
+				"type": "String"
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

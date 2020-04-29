@@ -1,0 +1,48 @@
+{
+	"name": "dataflow2",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "Input_Source",
+						"type": "DatasetReference"
+					},
+					"name": "AL002Prod"
+				},
+				{
+					"dataset": {
+						"referenceName": "Input_Dose",
+						"type": "DatasetReference"
+					},
+					"name": "AL002Dose"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "FinalOutputFile_DS",
+						"type": "DatasetReference"
+					},
+					"name": "FinalOutputFile"
+				}
+			],
+			"transformations": [
+				{
+					"name": "Days"
+				},
+				{
+					"name": "RESULTS"
+				},
+				{
+					"name": "VisitHours"
+				},
+				{
+					"name": "Join1"
+				}
+			],
+			"script": "source(output(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL002Prod\nsource(output(\n\t\tSUBJID as string,\n\t\tdose as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL002Dose\nAL002Prod derive(Days = toInteger(trim(substring(VISIT,4,length(VISIT)-3)))) ~> Days\nDays derive(RESULTS = iif(lesserOrEqual(toFloat(replace(RESULT,'<','')),20.0),divide(toFloat(LLOQ),2),toFloat(replace(RESULT,'<','')))) ~> RESULTS\nRESULTS derive(VisitHours = case(trim(TPT) == \"Predose\", 0,trim(TPT) == \"End of Infusion (EOI)\",1,isNull(trim(TPT)),minus(multiply(Days,24),24),toInteger(rtrim(trim(TPT),\"hr\")))) ~> VisitHours\nAL002Dose, VisitHours join(AL002Dose@SUBJID == AL002Prod@SUBJID,\n\tjoinType:'inner',\n\tbroadcast: 'none')~> Join1\nJoin1 sink(input(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string,\n\t\tdose as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinalOutputFile"
+		}
+	}
+}
