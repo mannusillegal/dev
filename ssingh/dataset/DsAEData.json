@@ -1,0 +1,429 @@
+{
+	"name": "DsAEData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AEData",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Adverse Events Data.csv",
+				"folderPath": "AE Data",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "project",
+				"type": "String"
+			},
+			{
+				"name": "studyid",
+				"type": "String"
+			},
+			{
+				"name": "Subject",
+				"type": "String"
+			},
+			{
+				"name": "Site",
+				"type": "String"
+			},
+			{
+				"name": "SiteNumber",
+				"type": "String"
+			},
+			{
+				"name": "SiteGroup",
+				"type": "String"
+			},
+			{
+				"name": "InstanceName",
+				"type": "String"
+			},
+			{
+				"name": "InstanceRepeatNumber",
+				"type": "String"
+			},
+			{
+				"name": "FolderName",
+				"type": "String"
+			},
+			{
+				"name": "DataPageName",
+				"type": "String"
+			},
+			{
+				"name": "RecordPosition",
+				"type": "String"
+			},
+			{
+				"name": "SaveTS",
+				"type": "String"
+			},
+			{
+				"name": "StudyEnvSiteNumber",
+				"type": "String"
+			},
+			{
+				"name": "AETERM",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_CoderDictName",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_CoderDictVersion",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_HLGT",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_HLGT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_HLT",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_HLT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_LLT",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_LLT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_PT",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_PT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_SOC",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_SOC_CODE",
+				"type": "String"
+			},
+			{
+				"name": "AESTDAT",
+				"type": "String"
+			},
+			{
+				"name": "AESTDAT_C",
+				"type": "String"
+			},
+			{
+				"name": "AESTDAT_Y",
+				"type": "String"
+			},
+			{
+				"name": "AESTDAT_M",
+				"type": "String"
+			},
+			{
+				"name": "AESTDAT_D",
+				"type": "String"
+			},
+			{
+				"name": "AESTTIM",
+				"type": "String"
+			},
+			{
+				"name": "AESTTIMU",
+				"type": "String"
+			},
+			{
+				"name": "AEONGO",
+				"type": "String"
+			},
+			{
+				"name": "AEONGO_CV",
+				"type": "String"
+			},
+			{
+				"name": "AEENDAT",
+				"type": "String"
+			},
+			{
+				"name": "AEENDAT_C",
+				"type": "String"
+			},
+			{
+				"name": "AEENDAT_Y",
+				"type": "String"
+			},
+			{
+				"name": "AEENDAT_M",
+				"type": "String"
+			},
+			{
+				"name": "AEENDAT_D",
+				"type": "String"
+			},
+			{
+				"name": "AEENTIM",
+				"type": "String"
+			},
+			{
+				"name": "AEENTIMU",
+				"type": "String"
+			},
+			{
+				"name": "AESEV",
+				"type": "String"
+			},
+			{
+				"name": "AESEV_CV",
+				"type": "String"
+			},
+			{
+				"name": "AEOUT",
+				"type": "String"
+			},
+			{
+				"name": "AEOUT_CV",
+				"type": "String"
+			},
+			{
+				"name": "AEPATT",
+				"type": "String"
+			},
+			{
+				"name": "AEPATT_CV",
+				"type": "String"
+			},
+			{
+				"name": "AEREL",
+				"type": "String"
+			},
+			{
+				"name": "AEREL_CV",
+				"type": "String"
+			},
+			{
+				"name": "AEACN",
+				"type": "String"
+			},
+			{
+				"name": "AEACN_CV",
+				"type": "String"
+			},
+			{
+				"name": "AEACNOTH",
+				"type": "String"
+			},
+			{
+				"name": "AESAE",
+				"type": "String"
+			},
+			{
+				"name": "AESAE_CV",
+				"type": "String"
+			},
+			{
+				"name": "CMNO",
+				"type": "String"
+			},
+			{
+				"name": "CMNO_CV",
+				"type": "String"
+			},
+			{
+				"name": "CMNO2",
+				"type": "String"
+			},
+			{
+				"name": "CMNO2_CV",
+				"type": "String"
+			},
+			{
+				"name": "CMNO3",
+				"type": "String"
+			},
+			{
+				"name": "CMNO3_CV",
+				"type": "String"
+			},
+			{
+				"name": "AESTDF",
+				"type": "String"
+			},
+			{
+				"name": "AESTDF_C",
+				"type": "String"
+			},
+			{
+				"name": "AESTDF_Y",
+				"type": "String"
+			},
+			{
+				"name": "AESTDF_M",
+				"type": "String"
+			},
+			{
+				"name": "AESTDF_D",
+				"type": "String"
+			},
+			{
+				"name": "AEENDF",
+				"type": "String"
+			},
+			{
+				"name": "AEENDF_C",
+				"type": "String"
+			},
+			{
+				"name": "AEENDF_Y",
+				"type": "String"
+			},
+			{
+				"name": "AEENDF_M",
+				"type": "String"
+			},
+			{
+				"name": "AEENDF_D",
+				"type": "String"
+			},
+			{
+				"name": "AESPID",
+				"type": "String"
+			},
+			{
+				"name": "AESLIF",
+				"type": "String"
+			},
+			{
+				"name": "AESDIS",
+				"type": "String"
+			},
+			{
+				"name": "AESCON",
+				"type": "String"
+			},
+			{
+				"name": "AESMI",
+				"type": "String"
+			},
+			{
+				"name": "AESDEATH",
+				"type": "String"
+			},
+			{
+				"name": "DTHDAT",
+				"type": "String"
+			},
+			{
+				"name": "DTHDAT_C",
+				"type": "String"
+			},
+			{
+				"name": "DTHDAT_Y",
+				"type": "String"
+			},
+			{
+				"name": "DTHDAT_M",
+				"type": "String"
+			},
+			{
+				"name": "DTHDAT_D",
+				"type": "String"
+			},
+			{
+				"name": "DTHCAUS",
+				"type": "String"
+			},
+			{
+				"name": "DTHCERT",
+				"type": "String"
+			},
+			{
+				"name": "DTHCERT_CV",
+				"type": "String"
+			},
+			{
+				"name": "DTHAUT",
+				"type": "String"
+			},
+			{
+				"name": "DTHAUT_CV",
+				"type": "String"
+			},
+			{
+				"name": "AEHOSP",
+				"type": "String"
+			},
+			{
+				"name": "HOSPTYP",
+				"type": "String"
+			},
+			{
+				"name": "HOSPTYP_CV",
+				"type": "String"
+			},
+			{
+				"name": "AEHODAT",
+				"type": "String"
+			},
+			{
+				"name": "AEHODAT_C",
+				"type": "String"
+			},
+			{
+				"name": "AEHODAT_Y",
+				"type": "String"
+			},
+			{
+				"name": "AEHODAT_M",
+				"type": "String"
+			},
+			{
+				"name": "AEHODAT_D",
+				"type": "String"
+			},
+			{
+				"name": "AEHDDAT",
+				"type": "String"
+			},
+			{
+				"name": "AEHDDAT_C",
+				"type": "String"
+			},
+			{
+				"name": "AEHDDAT_Y",
+				"type": "String"
+			},
+			{
+				"name": "AEHDDAT_M",
+				"type": "String"
+			},
+			{
+				"name": "AEHDDAT_D",
+				"type": "String"
+			},
+			{
+				"name": "AEALPSS",
+				"type": "String"
+			}
+		]
+	}
+}

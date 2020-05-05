@@ -1,0 +1,285 @@
+{
+	"name": "DsAL003AEData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AEData",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "AL003-1_Adverse Event.csv",
+				"folderPath": "AE Data",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "project",
+				"type": "String"
+			},
+			{
+				"name": "studyid",
+				"type": "String"
+			},
+			{
+				"name": "Subject",
+				"type": "String"
+			},
+			{
+				"name": "Site",
+				"type": "String"
+			},
+			{
+				"name": "SiteNumber",
+				"type": "String"
+			},
+			{
+				"name": "SiteGroup",
+				"type": "String"
+			},
+			{
+				"name": "InstanceName",
+				"type": "String"
+			},
+			{
+				"name": "InstanceRepeatNumber",
+				"type": "String"
+			},
+			{
+				"name": "FolderName",
+				"type": "String"
+			},
+			{
+				"name": "DataPageName",
+				"type": "String"
+			},
+			{
+				"name": "RecordPosition",
+				"type": "String"
+			},
+			{
+				"name": "SaveTS",
+				"type": "String"
+			},
+			{
+				"name": "AESTDAT",
+				"type": "String"
+			},
+			{
+				"name": "AESTTIM",
+				"type": "String"
+			},
+			{
+				"name": "AESTTIMUNK",
+				"type": "String"
+			},
+			{
+				"name": "AEONGO",
+				"type": "String"
+			},
+			{
+				"name": "AEONGO_STD",
+				"type": "String"
+			},
+			{
+				"name": "AEENDAT",
+				"type": "String"
+			},
+			{
+				"name": "AEENTIM",
+				"type": "String"
+			},
+			{
+				"name": "AEENTIMUNK",
+				"type": "String"
+			},
+			{
+				"name": "AESEV",
+				"type": "String"
+			},
+			{
+				"name": "AESEV_STD",
+				"type": "String"
+			},
+			{
+				"name": "AESER",
+				"type": "String"
+			},
+			{
+				"name": "AESER_STD",
+				"type": "String"
+			},
+			{
+				"name": "SAENAR",
+				"type": "String"
+			},
+			{
+				"name": "SAENAR1",
+				"type": "String"
+			},
+			{
+				"name": "SAENAR2",
+				"type": "String"
+			},
+			{
+				"name": "SAENAR3",
+				"type": "String"
+			},
+			{
+				"name": "SAENAR4",
+				"type": "String"
+			},
+			{
+				"name": "AESDTH",
+				"type": "String"
+			},
+			{
+				"name": "AESLIFE",
+				"type": "String"
+			},
+			{
+				"name": "AESHOSP",
+				"type": "String"
+			},
+			{
+				"name": "AESDISAB",
+				"type": "String"
+			},
+			{
+				"name": "AESCONG",
+				"type": "String"
+			},
+			{
+				"name": "AESMIE",
+				"type": "String"
+			},
+			{
+				"name": "AEREL",
+				"type": "String"
+			},
+			{
+				"name": "AEREL_STD",
+				"type": "String"
+			},
+			{
+				"name": "AEACN",
+				"type": "String"
+			},
+			{
+				"name": "AEACN_STD",
+				"type": "String"
+			},
+			{
+				"name": "AEOTHNO",
+				"type": "String"
+			},
+			{
+				"name": "AEOTHMD",
+				"type": "String"
+			},
+			{
+				"name": "AEMED",
+				"type": "String"
+			},
+			{
+				"name": "AEOTHOT",
+				"type": "String"
+			},
+			{
+				"name": "AEACNOTH",
+				"type": "String"
+			},
+			{
+				"name": "AEOUT",
+				"type": "String"
+			},
+			{
+				"name": "AEOUT_STD",
+				"type": "String"
+			},
+			{
+				"name": "AEDIS",
+				"type": "String"
+			},
+			{
+				"name": "AEDIS_STD",
+				"type": "String"
+			},
+			{
+				"name": "AESTDTTM",
+				"type": "String"
+			},
+			{
+				"name": "AEENDTTM",
+				"type": "String"
+			},
+			{
+				"name": "AETERM",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_HLGT",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_HLGT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_HLT",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_HLT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_LLT",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_LLT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_PT",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_PT_CODE",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_SOC",
+				"type": "String"
+			},
+			{
+				"name": "AETERM_SOC_CODE",
+				"type": "String"
+			},
+			{
+				"name": "AEDLAE",
+				"type": "String"
+			},
+			{
+				"name": "AEDLAE_STD",
+				"type": "String"
+			},
+			{
+				"name": "AESI",
+				"type": "String"
+			},
+			{
+				"name": "AESI_STD",
+				"type": "String"
+			}
+		]
+	}
+}
