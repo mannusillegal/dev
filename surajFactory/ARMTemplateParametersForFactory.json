@@ -1,0 +1,57 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "surajFactory"
+		},
+		"AL002_Dest_LS_accountKey": {
+			"value": ""
+		},
+		"AL002_Sr_LS_accountKey": {
+			"value": ""
+		},
+		"Al002_Dose_Sr_LS_accountKey": {
+			"value": ""
+		},
+		"Input_Data_accountKey": {
+			"value": ""
+		},
+		"L2_accountKey": {
+			"value": ""
+		},
+		"L3_accountKey": {
+			"value": ""
+		},
+		"Ls1_accountKey": {
+			"value": ""
+		},
+		"Output_Data_accountKey": {
+			"value": ""
+		},
+		"AL002_Dest_LS_properties_typeProperties_url": {
+			"value": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"AL002_Sr_LS_properties_typeProperties_url": {
+			"value": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"Al002_Dose_Sr_LS_properties_typeProperties_url": {
+			"value": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"Input_Data_properties_typeProperties_url": {
+			"value": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"L2_properties_typeProperties_url": {
+			"value": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"L3_properties_typeProperties_url": {
+			"value": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"Ls1_properties_typeProperties_url": {
+			"value": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"Output_Data_properties_typeProperties_url": {
+			"value": "https://datafactstorage12.dfs.core.windows.net"
+		}
+	}
+}

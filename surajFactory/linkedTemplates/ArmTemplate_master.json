@@ -1,0 +1,154 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "surajFactory"
+		},
+		"AL002_Dest_LS_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AL002_Dest_LS'"
+		},
+		"AL002_Sr_LS_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AL002_Sr_LS'"
+		},
+		"Al002_Dose_Sr_LS_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Al002_Dose_Sr_LS'"
+		},
+		"Input_Data_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Input_Data'"
+		},
+		"L2_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'L2'"
+		},
+		"L3_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'L3'"
+		},
+		"Ls1_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Ls1'"
+		},
+		"Output_Data_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'Output_Data'"
+		},
+		"AL002_Dest_LS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"AL002_Sr_LS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"Al002_Dose_Sr_LS_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"Input_Data_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"L2_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"L3_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"Ls1_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"Output_Data_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"AL002_Dest_LS_accountKey": {
+						"value": "[parameters('AL002_Dest_LS_accountKey')]"
+					},
+					"AL002_Sr_LS_accountKey": {
+						"value": "[parameters('AL002_Sr_LS_accountKey')]"
+					},
+					"Al002_Dose_Sr_LS_accountKey": {
+						"value": "[parameters('Al002_Dose_Sr_LS_accountKey')]"
+					},
+					"Input_Data_accountKey": {
+						"value": "[parameters('Input_Data_accountKey')]"
+					},
+					"L2_accountKey": {
+						"value": "[parameters('L2_accountKey')]"
+					},
+					"L3_accountKey": {
+						"value": "[parameters('L3_accountKey')]"
+					},
+					"Ls1_accountKey": {
+						"value": "[parameters('Ls1_accountKey')]"
+					},
+					"Output_Data_accountKey": {
+						"value": "[parameters('Output_Data_accountKey')]"
+					},
+					"AL002_Dest_LS_properties_typeProperties_url": {
+						"value": "[parameters('AL002_Dest_LS_properties_typeProperties_url')]"
+					},
+					"AL002_Sr_LS_properties_typeProperties_url": {
+						"value": "[parameters('AL002_Sr_LS_properties_typeProperties_url')]"
+					},
+					"Al002_Dose_Sr_LS_properties_typeProperties_url": {
+						"value": "[parameters('Al002_Dose_Sr_LS_properties_typeProperties_url')]"
+					},
+					"Input_Data_properties_typeProperties_url": {
+						"value": "[parameters('Input_Data_properties_typeProperties_url')]"
+					},
+					"L2_properties_typeProperties_url": {
+						"value": "[parameters('L2_properties_typeProperties_url')]"
+					},
+					"L3_properties_typeProperties_url": {
+						"value": "[parameters('L3_properties_typeProperties_url')]"
+					},
+					"Ls1_properties_typeProperties_url": {
+						"value": "[parameters('Ls1_properties_typeProperties_url')]"
+					},
+					"Output_Data_properties_typeProperties_url": {
+						"value": "[parameters('Output_Data_properties_typeProperties_url')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}
