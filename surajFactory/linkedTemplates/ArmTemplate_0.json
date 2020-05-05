@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "surajFactory"
 		},
+		"AEData_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AEData'"
+		},
 		"AL002_Dest_LS_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AL002_Dest_LS'"
@@ -39,9 +43,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'Output_Data'"
 		},
-		"AEData_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AEData'"
+		"AEData_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
 		},
 		"AL002_Dest_LS_properties_typeProperties_url": {
 			"type": "string",
@@ -74,16 +78,29 @@
 		"Output_Data_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
-		},
-		"AEData_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AEData')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AEData_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AEData_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AL002_Dest_LS')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -219,426 +236,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AEData')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AEData_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AEData_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FinalOutputFile_DS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Output_Data",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "stage"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "STUDYID",
-						"type": "String"
-					},
-					{
-						"name": "SITEID",
-						"type": "String"
-					},
-					{
-						"name": "SUBJID",
-						"type": "String"
-					},
-					{
-						"name": "COHORT",
-						"type": "String"
-					},
-					{
-						"name": "VISIT",
-						"type": "String"
-					},
-					{
-						"name": "TPT",
-						"type": "String"
-					},
-					{
-						"name": "DAT",
-						"type": "String"
-					},
-					{
-						"name": "TIM",
-						"type": "String"
-					},
-					{
-						"name": "SPEC",
-						"type": "String"
-					},
-					{
-						"name": "TEST",
-						"type": "String"
-					},
-					{
-						"name": "RESULT",
-						"type": "String"
-					},
-					{
-						"name": "UNIT",
-						"type": "String"
-					},
-					{
-						"name": "LLOQ",
-						"type": "String"
-					},
-					{
-						"name": "COMMENT",
-						"type": "String"
-					},
-					{
-						"name": "dose",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Output_Data')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Input_Dose')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Input_Data",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL002_Dose_by_subject.csv",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": "|",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "STUDYID",
-						"type": "String"
-					},
-					{
-						"name": "SITEID",
-						"type": "String"
-					},
-					{
-						"name": "SUBJID",
-						"type": "String"
-					},
-					{
-						"name": "COHORT",
-						"type": "String"
-					},
-					{
-						"name": "VISIT",
-						"type": "String"
-					},
-					{
-						"name": "TPT",
-						"type": "String"
-					},
-					{
-						"name": "DAT",
-						"type": "String"
-					},
-					{
-						"name": "TIM",
-						"type": "String"
-					},
-					{
-						"name": "SPEC",
-						"type": "String"
-					},
-					{
-						"name": "TEST",
-						"type": "String"
-					},
-					{
-						"name": "RESULT",
-						"type": "String"
-					},
-					{
-						"name": "UNIT",
-						"type": "String"
-					},
-					{
-						"name": "LLOQ",
-						"type": "String"
-					},
-					{
-						"name": "COMMENT",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Input_Data')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Input_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Input_Data",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL002-1_PROD_Icon_PK_SERUM_FULL_31102019.csv",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "STUDYID",
-						"type": "String"
-					},
-					{
-						"name": "SITEID",
-						"type": "String"
-					},
-					{
-						"name": "SUBJID",
-						"type": "String"
-					},
-					{
-						"name": "COHORT",
-						"type": "String"
-					},
-					{
-						"name": "VISIT",
-						"type": "String"
-					},
-					{
-						"name": "TPT",
-						"type": "String"
-					},
-					{
-						"name": "DAT",
-						"type": "String"
-					},
-					{
-						"name": "TIM",
-						"type": "String"
-					},
-					{
-						"name": "SPEC",
-						"type": "String"
-					},
-					{
-						"name": "TEST",
-						"type": "String"
-					},
-					{
-						"name": "RESULT",
-						"type": "String"
-					},
-					{
-						"name": "UNIT",
-						"type": "String"
-					},
-					{
-						"name": "LLOQ",
-						"type": "String"
-					},
-					{
-						"name": "COMMENT",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Input_Data')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/S2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "L2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL002_Dose_by_subject.csv",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": "|",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "SUBJID|dose",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/L2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Sink1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "L3",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "stage"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/L3')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Source1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Ls1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL002-1_PROD_Icon_PK_SERUM_FULL_31102019.csv",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "STUDYID",
-						"type": "String"
-					},
-					{
-						"name": "SITEID",
-						"type": "String"
-					},
-					{
-						"name": "SUBJID",
-						"type": "String"
-					},
-					{
-						"name": "COHORT",
-						"type": "String"
-					},
-					{
-						"name": "VISIT",
-						"type": "String"
-					},
-					{
-						"name": "TPT",
-						"type": "String"
-					},
-					{
-						"name": "DAT",
-						"type": "String"
-					},
-					{
-						"name": "TIM",
-						"type": "String"
-					},
-					{
-						"name": "SPEC",
-						"type": "String"
-					},
-					{
-						"name": "TEST",
-						"type": "String"
-					},
-					{
-						"name": "RESULT",
-						"type": "String"
-					},
-					{
-						"name": "UNIT",
-						"type": "String"
-					},
-					{
-						"name": "LLOQ",
-						"type": "String"
-					},
-					{
-						"name": "COMMENT",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Ls1')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DsAEData')]",
@@ -1075,296 +672,6 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DsAL003AEData')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "AEData",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL003-1_Adverse Event.csv",
-						"folderPath": "AE Data",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "project",
-						"type": "String"
-					},
-					{
-						"name": "studyid",
-						"type": "String"
-					},
-					{
-						"name": "Subject",
-						"type": "String"
-					},
-					{
-						"name": "Site",
-						"type": "String"
-					},
-					{
-						"name": "SiteNumber",
-						"type": "String"
-					},
-					{
-						"name": "SiteGroup",
-						"type": "String"
-					},
-					{
-						"name": "InstanceName",
-						"type": "String"
-					},
-					{
-						"name": "InstanceRepeatNumber",
-						"type": "String"
-					},
-					{
-						"name": "FolderName",
-						"type": "String"
-					},
-					{
-						"name": "DataPageName",
-						"type": "String"
-					},
-					{
-						"name": "RecordPosition",
-						"type": "String"
-					},
-					{
-						"name": "SaveTS",
-						"type": "String"
-					},
-					{
-						"name": "AESTDAT",
-						"type": "String"
-					},
-					{
-						"name": "AESTTIM",
-						"type": "String"
-					},
-					{
-						"name": "AESTTIMUNK",
-						"type": "String"
-					},
-					{
-						"name": "AEONGO",
-						"type": "String"
-					},
-					{
-						"name": "AEONGO_STD",
-						"type": "String"
-					},
-					{
-						"name": "AEENDAT",
-						"type": "String"
-					},
-					{
-						"name": "AEENTIM",
-						"type": "String"
-					},
-					{
-						"name": "AEENTIMUNK",
-						"type": "String"
-					},
-					{
-						"name": "AESEV",
-						"type": "String"
-					},
-					{
-						"name": "AESEV_STD",
-						"type": "String"
-					},
-					{
-						"name": "AESER",
-						"type": "String"
-					},
-					{
-						"name": "AESER_STD",
-						"type": "String"
-					},
-					{
-						"name": "SAENAR",
-						"type": "String"
-					},
-					{
-						"name": "SAENAR1",
-						"type": "String"
-					},
-					{
-						"name": "SAENAR2",
-						"type": "String"
-					},
-					{
-						"name": "SAENAR3",
-						"type": "String"
-					},
-					{
-						"name": "SAENAR4",
-						"type": "String"
-					},
-					{
-						"name": "AESDTH",
-						"type": "String"
-					},
-					{
-						"name": "AESLIFE",
-						"type": "String"
-					},
-					{
-						"name": "AESHOSP",
-						"type": "String"
-					},
-					{
-						"name": "AESDISAB",
-						"type": "String"
-					},
-					{
-						"name": "AESCONG",
-						"type": "String"
-					},
-					{
-						"name": "AESMIE",
-						"type": "String"
-					},
-					{
-						"name": "AEREL",
-						"type": "String"
-					},
-					{
-						"name": "AEREL_STD",
-						"type": "String"
-					},
-					{
-						"name": "AEACN",
-						"type": "String"
-					},
-					{
-						"name": "AEACN_STD",
-						"type": "String"
-					},
-					{
-						"name": "AEOTHNO",
-						"type": "String"
-					},
-					{
-						"name": "AEOTHMD",
-						"type": "String"
-					},
-					{
-						"name": "AEMED",
-						"type": "String"
-					},
-					{
-						"name": "AEOTHOT",
-						"type": "String"
-					},
-					{
-						"name": "AEACNOTH",
-						"type": "String"
-					},
-					{
-						"name": "AEOUT",
-						"type": "String"
-					},
-					{
-						"name": "AEOUT_STD",
-						"type": "String"
-					},
-					{
-						"name": "AEDIS",
-						"type": "String"
-					},
-					{
-						"name": "AEDIS_STD",
-						"type": "String"
-					},
-					{
-						"name": "AESTDTTM",
-						"type": "String"
-					},
-					{
-						"name": "AEENDTTM",
-						"type": "String"
-					},
-					{
-						"name": "AETERM",
-						"type": "String"
-					},
-					{
-						"name": "AETERM_HLGT",
-						"type": "String"
-					},
-					{
-						"name": "AETERM_HLGT_CODE",
-						"type": "String"
-					},
-					{
-						"name": "AETERM_HLT",
-						"type": "String"
-					},
-					{
-						"name": "AETERM_HLT_CODE",
-						"type": "String"
-					},
-					{
-						"name": "AETERM_LLT",
-						"type": "String"
-					},
-					{
-						"name": "AETERM_LLT_CODE",
-						"type": "String"
-					},
-					{
-						"name": "AETERM_PT",
-						"type": "String"
-					},
-					{
-						"name": "AETERM_PT_CODE",
-						"type": "String"
-					},
-					{
-						"name": "AETERM_SOC",
-						"type": "String"
-					},
-					{
-						"name": "AETERM_SOC_CODE",
-						"type": "String"
-					},
-					{
-						"name": "AEDLAE",
-						"type": "String"
-					},
-					{
-						"name": "AEDLAE_STD",
-						"type": "String"
-					},
-					{
-						"name": "AESI",
-						"type": "String"
-					},
-					{
-						"name": "AESI_STD",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/AEData')]"
-			]
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DsAL0012AE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1687,6 +994,614 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DsAL003AEData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AEData",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL003-1_Adverse Event.csv",
+						"folderPath": "AE Data",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "project",
+						"type": "String"
+					},
+					{
+						"name": "studyid",
+						"type": "String"
+					},
+					{
+						"name": "Subject",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "SiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "SiteGroup",
+						"type": "String"
+					},
+					{
+						"name": "InstanceName",
+						"type": "String"
+					},
+					{
+						"name": "InstanceRepeatNumber",
+						"type": "String"
+					},
+					{
+						"name": "FolderName",
+						"type": "String"
+					},
+					{
+						"name": "DataPageName",
+						"type": "String"
+					},
+					{
+						"name": "RecordPosition",
+						"type": "String"
+					},
+					{
+						"name": "SaveTS",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIM",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIMUNK",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIM",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIMUNK",
+						"type": "String"
+					},
+					{
+						"name": "AESEV",
+						"type": "String"
+					},
+					{
+						"name": "AESEV_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESER",
+						"type": "String"
+					},
+					{
+						"name": "AESER_STD",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR1",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR2",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR3",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR4",
+						"type": "String"
+					},
+					{
+						"name": "AESDTH",
+						"type": "String"
+					},
+					{
+						"name": "AESLIFE",
+						"type": "String"
+					},
+					{
+						"name": "AESHOSP",
+						"type": "String"
+					},
+					{
+						"name": "AESDISAB",
+						"type": "String"
+					},
+					{
+						"name": "AESCONG",
+						"type": "String"
+					},
+					{
+						"name": "AESMIE",
+						"type": "String"
+					},
+					{
+						"name": "AEREL",
+						"type": "String"
+					},
+					{
+						"name": "AEREL_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEACN",
+						"type": "String"
+					},
+					{
+						"name": "AEACN_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHNO",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHMD",
+						"type": "String"
+					},
+					{
+						"name": "AEMED",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHOT",
+						"type": "String"
+					},
+					{
+						"name": "AEACNOTH",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEDIS",
+						"type": "String"
+					},
+					{
+						"name": "AEDIS_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESTDTTM",
+						"type": "String"
+					},
+					{
+						"name": "AEENDTTM",
+						"type": "String"
+					},
+					{
+						"name": "AETERM",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLGT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLGT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_LLT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_LLT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_PT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_PT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_SOC",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_SOC_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AEDLAE",
+						"type": "String"
+					},
+					{
+						"name": "AEDLAE_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESI",
+						"type": "String"
+					},
+					{
+						"name": "AESI_STD",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AEData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/FinalOutputFile_DS')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Output_Data",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "stage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "STUDYID",
+						"type": "String"
+					},
+					{
+						"name": "SITEID",
+						"type": "String"
+					},
+					{
+						"name": "SUBJID",
+						"type": "String"
+					},
+					{
+						"name": "COHORT",
+						"type": "String"
+					},
+					{
+						"name": "VISIT",
+						"type": "String"
+					},
+					{
+						"name": "TPT",
+						"type": "String"
+					},
+					{
+						"name": "DAT",
+						"type": "String"
+					},
+					{
+						"name": "TIM",
+						"type": "String"
+					},
+					{
+						"name": "SPEC",
+						"type": "String"
+					},
+					{
+						"name": "TEST",
+						"type": "String"
+					},
+					{
+						"name": "RESULT",
+						"type": "String"
+					},
+					{
+						"name": "UNIT",
+						"type": "String"
+					},
+					{
+						"name": "LLOQ",
+						"type": "String"
+					},
+					{
+						"name": "COMMENT",
+						"type": "String"
+					},
+					{
+						"name": "dose",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Output_Data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Input_Dose')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Input_Data",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL002_Dose_by_subject.csv",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": "|",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "STUDYID",
+						"type": "String"
+					},
+					{
+						"name": "SITEID",
+						"type": "String"
+					},
+					{
+						"name": "SUBJID",
+						"type": "String"
+					},
+					{
+						"name": "COHORT",
+						"type": "String"
+					},
+					{
+						"name": "VISIT",
+						"type": "String"
+					},
+					{
+						"name": "TPT",
+						"type": "String"
+					},
+					{
+						"name": "DAT",
+						"type": "String"
+					},
+					{
+						"name": "TIM",
+						"type": "String"
+					},
+					{
+						"name": "SPEC",
+						"type": "String"
+					},
+					{
+						"name": "TEST",
+						"type": "String"
+					},
+					{
+						"name": "RESULT",
+						"type": "String"
+					},
+					{
+						"name": "UNIT",
+						"type": "String"
+					},
+					{
+						"name": "LLOQ",
+						"type": "String"
+					},
+					{
+						"name": "COMMENT",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Input_Data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Input_Source')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Input_Data",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL002-1_PROD_Icon_PK_SERUM_FULL_31102019.csv",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "STUDYID",
+						"type": "String"
+					},
+					{
+						"name": "SITEID",
+						"type": "String"
+					},
+					{
+						"name": "SUBJID",
+						"type": "String"
+					},
+					{
+						"name": "COHORT",
+						"type": "String"
+					},
+					{
+						"name": "VISIT",
+						"type": "String"
+					},
+					{
+						"name": "TPT",
+						"type": "String"
+					},
+					{
+						"name": "DAT",
+						"type": "String"
+					},
+					{
+						"name": "TIM",
+						"type": "String"
+					},
+					{
+						"name": "SPEC",
+						"type": "String"
+					},
+					{
+						"name": "TEST",
+						"type": "String"
+					},
+					{
+						"name": "RESULT",
+						"type": "String"
+					},
+					{
+						"name": "UNIT",
+						"type": "String"
+					},
+					{
+						"name": "LLOQ",
+						"type": "String"
+					},
+					{
+						"name": "COMMENT",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Input_Data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/S2')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "L2",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL002_Dose_by_subject.csv",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": "|",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "SUBJID|dose",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/L2')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Sink1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "L3",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "stage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/L3')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SinkAE')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1784,6 +1699,91 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Output_Data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Source1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Ls1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL002-1_PROD_Icon_PK_SERUM_FULL_31102019.csv",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "STUDYID",
+						"type": "String"
+					},
+					{
+						"name": "SITEID",
+						"type": "String"
+					},
+					{
+						"name": "SUBJID",
+						"type": "String"
+					},
+					{
+						"name": "COHORT",
+						"type": "String"
+					},
+					{
+						"name": "VISIT",
+						"type": "String"
+					},
+					{
+						"name": "TPT",
+						"type": "String"
+					},
+					{
+						"name": "DAT",
+						"type": "String"
+					},
+					{
+						"name": "TIM",
+						"type": "String"
+					},
+					{
+						"name": "SPEC",
+						"type": "String"
+					},
+					{
+						"name": "TEST",
+						"type": "String"
+					},
+					{
+						"name": "RESULT",
+						"type": "String"
+					},
+					{
+						"name": "UNIT",
+						"type": "String"
+					},
+					{
+						"name": "LLOQ",
+						"type": "String"
+					},
+					{
+						"name": "COMMENT",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Ls1')]"
 			]
 		},
 		{

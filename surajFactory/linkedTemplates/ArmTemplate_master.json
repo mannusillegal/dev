@@ -7,6 +7,10 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "surajFactory"
 		},
+		"AEData_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AEData'"
+		},
 		"AL002_Dest_LS_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'AL002_Dest_LS'"
@@ -39,9 +43,9 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'Output_Data'"
 		},
-		"AEData_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AEData'"
+		"AEData_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
 		},
 		"AL002_Dest_LS_properties_typeProperties_url": {
 			"type": "string",
@@ -75,10 +79,6 @@
 			"type": "string",
 			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
 		},
-		"AEData_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
-		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -106,6 +106,9 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
+					"AEData_accountKey": {
+						"value": "[parameters('AEData_accountKey')]"
+					},
 					"AL002_Dest_LS_accountKey": {
 						"value": "[parameters('AL002_Dest_LS_accountKey')]"
 					},
@@ -130,8 +133,8 @@
 					"Output_Data_accountKey": {
 						"value": "[parameters('Output_Data_accountKey')]"
 					},
-					"AEData_accountKey": {
-						"value": "[parameters('AEData_accountKey')]"
+					"AEData_properties_typeProperties_url": {
+						"value": "[parameters('AEData_properties_typeProperties_url')]"
 					},
 					"AL002_Dest_LS_properties_typeProperties_url": {
 						"value": "[parameters('AL002_Dest_LS_properties_typeProperties_url')]"
@@ -156,9 +159,6 @@
 					},
 					"Output_Data_properties_typeProperties_url": {
 						"value": "[parameters('Output_Data_properties_typeProperties_url')]"
-					},
-					"AEData_properties_typeProperties_url": {
-						"value": "[parameters('AEData_properties_typeProperties_url')]"
 					}
 				}
 			},
