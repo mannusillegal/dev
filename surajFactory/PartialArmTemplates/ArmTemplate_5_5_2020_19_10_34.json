@@ -6,220 +6,12 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "surajFactory"
-		},
-		"AL002_Dest_LS_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AL002_Dest_LS'"
-		},
-		"AL002_Sr_LS_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AL002_Sr_LS'"
-		},
-		"Al002_Dose_Sr_LS_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'Al002_Dose_Sr_LS'"
-		},
-		"Input_Data_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'Input_Data'"
-		},
-		"L2_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'L2'"
-		},
-		"L3_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'L3'"
-		},
-		"Ls1_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'Ls1'"
-		},
-		"Output_Data_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'Output_Data'"
-		},
-		"AEData_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'AEData'"
-		},
-		"AL002_Dest_LS_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
-		},
-		"AL002_Sr_LS_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
-		},
-		"Al002_Dose_Sr_LS_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
-		},
-		"Input_Data_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
-		},
-		"L2_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
-		},
-		"L3_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
-		},
-		"Ls1_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
-		},
-		"Output_Data_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
-		},
-		"AEData_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/AL002_Dest_LS')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AL002_Dest_LS_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AL002_Dest_LS_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/AL002_Sr_LS')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('AL002_Sr_LS_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('AL002_Sr_LS_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Al002_Dose_Sr_LS')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('Al002_Dose_Sr_LS_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('Al002_Dose_Sr_LS_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Input_Data')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('Input_Data_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('Input_Data_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/L2')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('L2_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('L2_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/L3')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('L3_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('L3_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Ls1')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('Ls1_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('Ls1_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Output_Data')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureBlobFS",
-				"typeProperties": {
-					"url": "[parameters('Output_Data_properties_typeProperties_url')]",
-					"accountKey": {
-						"type": "SecureString",
-						"value": "[parameters('Output_Data_accountKey')]"
-					}
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/AEData')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -228,417 +20,14 @@
 				"annotations": [],
 				"type": "AzureBlobFS",
 				"typeProperties": {
-					"url": "[parameters('AEData_properties_typeProperties_url')]",
+					"url": "https://datafactstorage12.dfs.core.windows.net",
 					"accountKey": {
 						"type": "SecureString",
-						"value": "[parameters('AEData_accountKey')]"
+						"value": "**********"
 					}
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/FinalOutputFile_DS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Output_Data",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "stage"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "STUDYID",
-						"type": "String"
-					},
-					{
-						"name": "SITEID",
-						"type": "String"
-					},
-					{
-						"name": "SUBJID",
-						"type": "String"
-					},
-					{
-						"name": "COHORT",
-						"type": "String"
-					},
-					{
-						"name": "VISIT",
-						"type": "String"
-					},
-					{
-						"name": "TPT",
-						"type": "String"
-					},
-					{
-						"name": "DAT",
-						"type": "String"
-					},
-					{
-						"name": "TIM",
-						"type": "String"
-					},
-					{
-						"name": "SPEC",
-						"type": "String"
-					},
-					{
-						"name": "TEST",
-						"type": "String"
-					},
-					{
-						"name": "RESULT",
-						"type": "String"
-					},
-					{
-						"name": "UNIT",
-						"type": "String"
-					},
-					{
-						"name": "LLOQ",
-						"type": "String"
-					},
-					{
-						"name": "COMMENT",
-						"type": "String"
-					},
-					{
-						"name": "dose",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Output_Data')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Input_Dose')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Input_Data",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL002_Dose_by_subject.csv",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": "|",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "STUDYID",
-						"type": "String"
-					},
-					{
-						"name": "SITEID",
-						"type": "String"
-					},
-					{
-						"name": "SUBJID",
-						"type": "String"
-					},
-					{
-						"name": "COHORT",
-						"type": "String"
-					},
-					{
-						"name": "VISIT",
-						"type": "String"
-					},
-					{
-						"name": "TPT",
-						"type": "String"
-					},
-					{
-						"name": "DAT",
-						"type": "String"
-					},
-					{
-						"name": "TIM",
-						"type": "String"
-					},
-					{
-						"name": "SPEC",
-						"type": "String"
-					},
-					{
-						"name": "TEST",
-						"type": "String"
-					},
-					{
-						"name": "RESULT",
-						"type": "String"
-					},
-					{
-						"name": "UNIT",
-						"type": "String"
-					},
-					{
-						"name": "LLOQ",
-						"type": "String"
-					},
-					{
-						"name": "COMMENT",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Input_Data')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Input_Source')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Input_Data",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL002-1_PROD_Icon_PK_SERUM_FULL_31102019.csv",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "STUDYID",
-						"type": "String"
-					},
-					{
-						"name": "SITEID",
-						"type": "String"
-					},
-					{
-						"name": "SUBJID",
-						"type": "String"
-					},
-					{
-						"name": "COHORT",
-						"type": "String"
-					},
-					{
-						"name": "VISIT",
-						"type": "String"
-					},
-					{
-						"name": "TPT",
-						"type": "String"
-					},
-					{
-						"name": "DAT",
-						"type": "String"
-					},
-					{
-						"name": "TIM",
-						"type": "String"
-					},
-					{
-						"name": "SPEC",
-						"type": "String"
-					},
-					{
-						"name": "TEST",
-						"type": "String"
-					},
-					{
-						"name": "RESULT",
-						"type": "String"
-					},
-					{
-						"name": "UNIT",
-						"type": "String"
-					},
-					{
-						"name": "LLOQ",
-						"type": "String"
-					},
-					{
-						"name": "COMMENT",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Input_Data')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/S2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "L2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL002_Dose_by_subject.csv",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": "|",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "SUBJID|dose",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/L2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Sink1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "L3",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "stage"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/L3')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Source1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Ls1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL002-1_PROD_Icon_PK_SERUM_FULL_31102019.csv",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "STUDYID",
-						"type": "String"
-					},
-					{
-						"name": "SITEID",
-						"type": "String"
-					},
-					{
-						"name": "SUBJID",
-						"type": "String"
-					},
-					{
-						"name": "COHORT",
-						"type": "String"
-					},
-					{
-						"name": "VISIT",
-						"type": "String"
-					},
-					{
-						"name": "TPT",
-						"type": "String"
-					},
-					{
-						"name": "DAT",
-						"type": "String"
-					},
-					{
-						"name": "TIM",
-						"type": "String"
-					},
-					{
-						"name": "SPEC",
-						"type": "String"
-					},
-					{
-						"name": "TEST",
-						"type": "String"
-					},
-					{
-						"name": "RESULT",
-						"type": "String"
-					},
-					{
-						"name": "UNIT",
-						"type": "String"
-					},
-					{
-						"name": "LLOQ",
-						"type": "String"
-					},
-					{
-						"name": "COMMENT",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Ls1')]"
-			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/DsAEData')]",
@@ -1782,12 +1171,10 @@
 					}
 				]
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Output_Data')]"
-			]
+			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"name": "[concat(parameters('factoryName'), '/dataflow3')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -1796,40 +1183,84 @@
 					"sources": [
 						{
 							"dataset": {
-								"referenceName": "Source1",
+								"referenceName": "DsAEData",
 								"type": "DatasetReference"
 							},
-							"name": "source1"
+							"name": "AdverseEventsData"
 						},
 						{
 							"dataset": {
-								"referenceName": "S2",
+								"referenceName": "DsAL003AEData",
 								"type": "DatasetReference"
 							},
-							"name": "source2"
+							"name": "AL0031AdverseEvent"
+						},
+						{
+							"dataset": {
+								"referenceName": "DsAL0012AE",
+								"type": "DatasetReference"
+							},
+							"name": "AL0012AE"
 						}
 					],
 					"sinks": [
 						{
 							"dataset": {
-								"referenceName": "Sink1",
+								"referenceName": "SinkAE",
 								"type": "DatasetReference"
 							},
-							"name": "sink1"
+							"name": "FinalOutput"
 						}
 					],
 					"transformations": [
 						{
-							"name": "Join1"
+							"name": "Union1"
 						}
 					],
-					"script": "source(output(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\nsource(output(\n\t\tSUBJID as string,\n\t\tdose as double '000,000,000.000'\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true) ~> source2\nsource1, source2 join(source1@SUBJID == source2@SUBJID,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+					"script": "source(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AdverseEventsData\nsource(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL0031AdverseEvent\nsource(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL0012AE\nAdverseEventsData, AL0031AdverseEvent, AL0012AE union(byName: true,\n\tpartitionBy('hash', 1))~> Union1\nUnion1 sink(input(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string,\n\t\tDays as string,\n\t\tRESULTS as string,\n\t\tdose as string,\n\t\tVisitHours as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinalOutput"
 				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Source1')]",
-				"[concat(variables('factoryId'), '/datasets/S2')]",
-				"[concat(variables('factoryId'), '/datasets/Sink1')]"
+				"[concat(variables('factoryId'), '/datasets/DsAEData')]",
+				"[concat(variables('factoryId'), '/datasets/DsAL003AEData')]",
+				"[concat(variables('factoryId'), '/datasets/DsAL0012AE')]",
+				"[concat(variables('factoryId'), '/datasets/SinkAE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow3",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow3",
+								"type": "DataFlowReference"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow3')]"
 			]
 		}
 	]

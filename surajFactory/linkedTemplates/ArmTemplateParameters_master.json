@@ -29,6 +29,9 @@
 		"Output_Data_accountKey": {
 			"value": ""
 		},
+		"AEData_accountKey": {
+			"value": ""
+		},
 		"AL002_Dest_LS_properties_typeProperties_url": {
 			"value": "https://datafactstorage12.dfs.core.windows.net"
 		},
@@ -51,6 +54,9 @@
 			"value": "https://datafactstorage12.dfs.core.windows.net"
 		},
 		"Output_Data_properties_typeProperties_url": {
+			"value": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"AEData_properties_typeProperties_url": {
 			"value": "https://datafactstorage12.dfs.core.windows.net"
 		},
 		"containerUri": {

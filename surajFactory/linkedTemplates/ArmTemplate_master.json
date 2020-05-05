@@ -39,6 +39,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'Output_Data'"
 		},
+		"AEData_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AEData'"
+		},
 		"AL002_Dest_LS_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
@@ -68,6 +72,10 @@
 			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
 		},
 		"Output_Data_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"AEData_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
 		},
@@ -122,6 +130,9 @@
 					"Output_Data_accountKey": {
 						"value": "[parameters('Output_Data_accountKey')]"
 					},
+					"AEData_accountKey": {
+						"value": "[parameters('AEData_accountKey')]"
+					},
 					"AL002_Dest_LS_properties_typeProperties_url": {
 						"value": "[parameters('AL002_Dest_LS_properties_typeProperties_url')]"
 					},
@@ -145,10 +156,33 @@
 					},
 					"Output_Data_properties_typeProperties_url": {
 						"value": "[parameters('Output_Data_properties_typeProperties_url')]"
+					},
+					"AEData_properties_typeProperties_url": {
+						"value": "[parameters('AEData_properties_typeProperties_url')]"
 					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'ArmTemplate_0')]"
+			]
 		}
 	]
 }

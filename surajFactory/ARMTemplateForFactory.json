@@ -39,6 +39,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'Output_Data'"
 		},
+		"AEData_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'AEData'"
+		},
 		"AL002_Dest_LS_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
@@ -68,6 +72,10 @@
 			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
 		},
 		"Output_Data_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
+		},
+		"AEData_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://datafactstorage12.dfs.core.windows.net"
 		}
@@ -800,6 +808,1267 @@
 				"[concat(variables('factoryId'), '/datasets/Input_Source')]",
 				"[concat(variables('factoryId'), '/datasets/Input_Dose')]",
 				"[concat(variables('factoryId'), '/datasets/FinalOutputFile_DS')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AEData')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AEData_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AEData_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DsAEData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AEData",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "Adverse Events Data.csv",
+						"folderPath": "AE Data",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "project",
+						"type": "String"
+					},
+					{
+						"name": "studyid",
+						"type": "String"
+					},
+					{
+						"name": "Subject",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "SiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "SiteGroup",
+						"type": "String"
+					},
+					{
+						"name": "InstanceName",
+						"type": "String"
+					},
+					{
+						"name": "InstanceRepeatNumber",
+						"type": "String"
+					},
+					{
+						"name": "FolderName",
+						"type": "String"
+					},
+					{
+						"name": "DataPageName",
+						"type": "String"
+					},
+					{
+						"name": "RecordPosition",
+						"type": "String"
+					},
+					{
+						"name": "SaveTS",
+						"type": "String"
+					},
+					{
+						"name": "StudyEnvSiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "AETERM",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_CoderDictName",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_CoderDictVersion",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLGT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLGT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_LLT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_LLT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_PT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_PT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_SOC",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_SOC_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIM",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIMU",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIM",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIMU",
+						"type": "String"
+					},
+					{
+						"name": "AESEV",
+						"type": "String"
+					},
+					{
+						"name": "AESEV_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEPATT",
+						"type": "String"
+					},
+					{
+						"name": "AEPATT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEREL",
+						"type": "String"
+					},
+					{
+						"name": "AEREL_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEACN",
+						"type": "String"
+					},
+					{
+						"name": "AEACN_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEACNOTH",
+						"type": "String"
+					},
+					{
+						"name": "AESAE",
+						"type": "String"
+					},
+					{
+						"name": "AESAE_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO",
+						"type": "String"
+					},
+					{
+						"name": "CMNO_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO2",
+						"type": "String"
+					},
+					{
+						"name": "CMNO2_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO3",
+						"type": "String"
+					},
+					{
+						"name": "CMNO3_CV",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_C",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_Y",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_M",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_D",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_C",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_M",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_D",
+						"type": "String"
+					},
+					{
+						"name": "AESPID",
+						"type": "String"
+					},
+					{
+						"name": "AESLIF",
+						"type": "String"
+					},
+					{
+						"name": "AESDIS",
+						"type": "String"
+					},
+					{
+						"name": "AESCON",
+						"type": "String"
+					},
+					{
+						"name": "AESMI",
+						"type": "String"
+					},
+					{
+						"name": "AESDEATH",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "DTHCAUS",
+						"type": "String"
+					},
+					{
+						"name": "DTHCERT",
+						"type": "String"
+					},
+					{
+						"name": "DTHCERT_CV",
+						"type": "String"
+					},
+					{
+						"name": "DTHAUT",
+						"type": "String"
+					},
+					{
+						"name": "DTHAUT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEHOSP",
+						"type": "String"
+					},
+					{
+						"name": "HOSPTYP",
+						"type": "String"
+					},
+					{
+						"name": "HOSPTYP_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AEALPSS",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AEData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DsAL003AEData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AEData",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL003-1_Adverse Event.csv",
+						"folderPath": "AE Data",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "project",
+						"type": "String"
+					},
+					{
+						"name": "studyid",
+						"type": "String"
+					},
+					{
+						"name": "Subject",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "SiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "SiteGroup",
+						"type": "String"
+					},
+					{
+						"name": "InstanceName",
+						"type": "String"
+					},
+					{
+						"name": "InstanceRepeatNumber",
+						"type": "String"
+					},
+					{
+						"name": "FolderName",
+						"type": "String"
+					},
+					{
+						"name": "DataPageName",
+						"type": "String"
+					},
+					{
+						"name": "RecordPosition",
+						"type": "String"
+					},
+					{
+						"name": "SaveTS",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIM",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIMUNK",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIM",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIMUNK",
+						"type": "String"
+					},
+					{
+						"name": "AESEV",
+						"type": "String"
+					},
+					{
+						"name": "AESEV_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESER",
+						"type": "String"
+					},
+					{
+						"name": "AESER_STD",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR1",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR2",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR3",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR4",
+						"type": "String"
+					},
+					{
+						"name": "AESDTH",
+						"type": "String"
+					},
+					{
+						"name": "AESLIFE",
+						"type": "String"
+					},
+					{
+						"name": "AESHOSP",
+						"type": "String"
+					},
+					{
+						"name": "AESDISAB",
+						"type": "String"
+					},
+					{
+						"name": "AESCONG",
+						"type": "String"
+					},
+					{
+						"name": "AESMIE",
+						"type": "String"
+					},
+					{
+						"name": "AEREL",
+						"type": "String"
+					},
+					{
+						"name": "AEREL_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEACN",
+						"type": "String"
+					},
+					{
+						"name": "AEACN_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHNO",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHMD",
+						"type": "String"
+					},
+					{
+						"name": "AEMED",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHOT",
+						"type": "String"
+					},
+					{
+						"name": "AEACNOTH",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEDIS",
+						"type": "String"
+					},
+					{
+						"name": "AEDIS_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESTDTTM",
+						"type": "String"
+					},
+					{
+						"name": "AEENDTTM",
+						"type": "String"
+					},
+					{
+						"name": "AETERM",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLGT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLGT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_LLT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_LLT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_PT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_PT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_SOC",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_SOC_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AEDLAE",
+						"type": "String"
+					},
+					{
+						"name": "AEDLAE_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESI",
+						"type": "String"
+					},
+					{
+						"name": "AESI_STD",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AEData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DsAL0012AE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AEData",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL0012_AE.csv",
+						"folderPath": "AE Data",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "project",
+						"type": "String"
+					},
+					{
+						"name": "studyid",
+						"type": "String"
+					},
+					{
+						"name": "Subject",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "SiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "SiteGroup",
+						"type": "String"
+					},
+					{
+						"name": "InstanceName",
+						"type": "String"
+					},
+					{
+						"name": "InstanceRepeatNumber",
+						"type": "String"
+					},
+					{
+						"name": "FolderName",
+						"type": "String"
+					},
+					{
+						"name": "DataPageName",
+						"type": "String"
+					},
+					{
+						"name": "RecordPosition",
+						"type": "String"
+					},
+					{
+						"name": "SaveTS",
+						"type": "String"
+					},
+					{
+						"name": "StudyEnvSiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "AETERM",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_CoderDictName",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_CoderDictVersion",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLGT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLGT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_LLT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_LLT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_PT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_PT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_SOC",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_SOC_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIM",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIMU",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIM",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIMU",
+						"type": "String"
+					},
+					{
+						"name": "AESEV",
+						"type": "String"
+					},
+					{
+						"name": "AESEV_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEPATT",
+						"type": "String"
+					},
+					{
+						"name": "AEPATT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEREL",
+						"type": "String"
+					},
+					{
+						"name": "AEREL_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEACN",
+						"type": "String"
+					},
+					{
+						"name": "AEACN_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEACNOTH",
+						"type": "String"
+					},
+					{
+						"name": "AESAE",
+						"type": "String"
+					},
+					{
+						"name": "AESAE_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO",
+						"type": "String"
+					},
+					{
+						"name": "CMNO_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO2",
+						"type": "String"
+					},
+					{
+						"name": "CMNO2_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO3",
+						"type": "String"
+					},
+					{
+						"name": "CMNO3_CV",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF",
+						"type": "String"
+					},
+					{
+						"name": "AESPID",
+						"type": "String"
+					},
+					{
+						"name": "AESLIF",
+						"type": "String"
+					},
+					{
+						"name": "AESDIS",
+						"type": "String"
+					},
+					{
+						"name": "AESCON",
+						"type": "String"
+					},
+					{
+						"name": "AESMI",
+						"type": "String"
+					},
+					{
+						"name": "AESDEATH",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT",
+						"type": "String"
+					},
+					{
+						"name": "DTHCAUS",
+						"type": "String"
+					},
+					{
+						"name": "DTHCERT",
+						"type": "String"
+					},
+					{
+						"name": "DTHCERT_CV",
+						"type": "String"
+					},
+					{
+						"name": "DTHAUT",
+						"type": "String"
+					},
+					{
+						"name": "DTHAUT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEHOSP",
+						"type": "String"
+					},
+					{
+						"name": "HOSPTYP",
+						"type": "String"
+					},
+					{
+						"name": "HOSPTYP_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT",
+						"type": "String"
+					},
+					{
+						"name": "AEALPSS",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AEData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SinkAE')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Output_Data",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "stage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "STUDYID",
+						"type": "String"
+					},
+					{
+						"name": "SITEID",
+						"type": "String"
+					},
+					{
+						"name": "SUBJID",
+						"type": "String"
+					},
+					{
+						"name": "COHORT",
+						"type": "String"
+					},
+					{
+						"name": "VISIT",
+						"type": "String"
+					},
+					{
+						"name": "TPT",
+						"type": "String"
+					},
+					{
+						"name": "DAT",
+						"type": "String"
+					},
+					{
+						"name": "TIM",
+						"type": "String"
+					},
+					{
+						"name": "SPEC",
+						"type": "String"
+					},
+					{
+						"name": "TEST",
+						"type": "String"
+					},
+					{
+						"name": "RESULT",
+						"type": "String"
+					},
+					{
+						"name": "UNIT",
+						"type": "String"
+					},
+					{
+						"name": "LLOQ",
+						"type": "String"
+					},
+					{
+						"name": "COMMENT",
+						"type": "String"
+					},
+					{
+						"name": "Days",
+						"type": "String"
+					},
+					{
+						"name": "RESULTS",
+						"type": "String"
+					},
+					{
+						"name": "dose",
+						"type": "String"
+					},
+					{
+						"name": "VisitHours",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Output_Data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow3')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DsAEData",
+								"type": "DatasetReference"
+							},
+							"name": "AdverseEventsData"
+						},
+						{
+							"dataset": {
+								"referenceName": "DsAL003AEData",
+								"type": "DatasetReference"
+							},
+							"name": "AL0031AdverseEvent"
+						},
+						{
+							"dataset": {
+								"referenceName": "DsAL0012AE",
+								"type": "DatasetReference"
+							},
+							"name": "AL0012AE"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "SinkAE",
+								"type": "DatasetReference"
+							},
+							"name": "FinalOutput"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Union1"
+						}
+					],
+					"script": "source(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AdverseEventsData\nsource(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL0031AdverseEvent\nsource(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL0012AE\nAdverseEventsData, AL0031AdverseEvent, AL0012AE union(byName: true,\n\tpartitionBy('hash', 1))~> Union1\nUnion1 sink(input(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string,\n\t\tDays as string,\n\t\tRESULTS as string,\n\t\tdose as string,\n\t\tVisitHours as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinalOutput"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DsAEData')]",
+				"[concat(variables('factoryId'), '/datasets/DsAL003AEData')]",
+				"[concat(variables('factoryId'), '/datasets/DsAL0012AE')]",
+				"[concat(variables('factoryId'), '/datasets/SinkAE')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow3",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "dataflow3",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"AdverseEventsData": {},
+									"AL0031AdverseEvent": {},
+									"AL0012AE": {},
+									"FinalOutput": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/dataflow3')]"
 			]
 		}
 	]
