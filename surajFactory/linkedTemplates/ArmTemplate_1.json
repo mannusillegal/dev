@@ -13,6 +13,133 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/Source1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Ls1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL002-1_PROD_Icon_PK_SERUM_FULL_31102019.csv",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "STUDYID",
+						"type": "String"
+					},
+					{
+						"name": "SITEID",
+						"type": "String"
+					},
+					{
+						"name": "SUBJID",
+						"type": "String"
+					},
+					{
+						"name": "COHORT",
+						"type": "String"
+					},
+					{
+						"name": "VISIT",
+						"type": "String"
+					},
+					{
+						"name": "TPT",
+						"type": "String"
+					},
+					{
+						"name": "DAT",
+						"type": "String"
+					},
+					{
+						"name": "TIM",
+						"type": "String"
+					},
+					{
+						"name": "SPEC",
+						"type": "String"
+					},
+					{
+						"name": "TEST",
+						"type": "String"
+					},
+					{
+						"name": "RESULT",
+						"type": "String"
+					},
+					{
+						"name": "UNIT",
+						"type": "String"
+					},
+					{
+						"name": "LLOQ",
+						"type": "String"
+					},
+					{
+						"name": "COMMENT",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "Source1",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						},
+						{
+							"dataset": {
+								"referenceName": "S2",
+								"type": "DatasetReference"
+							},
+							"name": "source2"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "Sink1",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "Join1"
+						}
+					],
+					"script": "source(output(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\nsource(output(\n\t\tSUBJID as string,\n\t\tdose as double '000,000,000.000'\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true) ~> source2\nsource1, source2 join(source1@SUBJID == source2@SUBJID,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/Source1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
 			"type": "Microsoft.DataFactory/factories/dataflows",
 			"apiVersion": "2018-06-01",

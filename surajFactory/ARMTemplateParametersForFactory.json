@@ -26,6 +26,9 @@
 		"L3_accountKey": {
 			"value": ""
 		},
+		"LS_Ram_AzureSQL_connectionString": {
+			"value": ""
+		},
 		"Ls1_accountKey": {
 			"value": ""
 		},
