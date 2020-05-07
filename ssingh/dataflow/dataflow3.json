@@ -1,0 +1,45 @@
+{
+	"name": "dataflow3",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_AL003ICF",
+						"type": "DatasetReference"
+					},
+					"name": "AL0031ICF"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_AL1011ICF",
+						"type": "DatasetReference"
+					},
+					"name": "AL1011ICF"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_ICF_SINK",
+						"type": "DatasetReference"
+					},
+					"name": "FinalICFData"
+				}
+			],
+			"transformations": [
+				{
+					"name": "DerivedColumn1"
+				},
+				{
+					"name": "DerivedColumn2"
+				},
+				{
+					"name": "Union"
+				}
+			],
+			"script": "source(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tICDAT as string,\n\t\tICTIM as string,\n\t\tICDTTM as string,\n\t\tICMONYR as string,\n\t\tICYR as string,\n\t\tPROTOCOL as string,\n\t\tPROTOCOL_STD as string,\n\t\tENCOHORT as string,\n\t\tENCOHORT_STD as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL0031ICF\nsource(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tICDAT as string,\n\t\tICTIM as string,\n\t\tICDTTM as string,\n\t\tICMONYR as string,\n\t\tICYR as string,\n\t\tPROTOCOL as string,\n\t\tPROTOCOL_STD as string,\n\t\tENCOHORT as string,\n\t\tENCOHORT_STD as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL1011ICF\nAL0031ICF derive(Date = trim(ICDAT)) ~> DerivedColumn1\nAL1011ICF derive(Date = trim(DSSTDAT_C)) ~> DerivedColumn2\nDerivedColumn1, DerivedColumn2 union(byName: true)~> Union\nUnion sink(input(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string,\n\t\tAESTTIMUNK as string,\n\t\tAEONGO_STD as string,\n\t\tAEENTIMUNK as string,\n\t\tAESEV_STD as string,\n\t\tAESER as string,\n\t\tAESER_STD as string,\n\t\tSAENAR as string,\n\t\tSAENAR1 as string,\n\t\tSAENAR2 as string,\n\t\tSAENAR3 as string,\n\t\tSAENAR4 as string,\n\t\tAESDTH as string,\n\t\tAESLIFE as string,\n\t\tAESHOSP as string,\n\t\tAESDISAB as string,\n\t\tAESCONG as string,\n\t\tAESMIE as string,\n\t\tAEREL_STD as string,\n\t\tAEACN_STD as string,\n\t\tAEOTHNO as string,\n\t\tAEOTHMD as string,\n\t\tAEMED as string,\n\t\tAEOTHOT as string,\n\t\tAEOUT_STD as string,\n\t\tAEDIS as string,\n\t\tAEDIS_STD as string,\n\t\tAESTDTTM as string,\n\t\tAEENDTTM as string,\n\t\tAEDLAE as string,\n\t\tAEDLAE_STD as string,\n\t\tAESI as string,\n\t\tAESI_STD as string,\n\t\tAESTDATnew as string,\n\t\tAESTDATnew1 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['FinalICF.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinalICFData"
+		}
+	}
+}
