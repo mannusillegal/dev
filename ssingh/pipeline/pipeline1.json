@@ -21,7 +21,7 @@
 					},
 					"compute": {
 						"coreCount": 8,
-						"computeType": "General"
+						"computeType": "ComputeOptimized"
 					}
 				}
 			}
