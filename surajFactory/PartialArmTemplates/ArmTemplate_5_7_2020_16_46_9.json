@@ -13,12 +13,48 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/S2')]",
+			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "dataflow3",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "AE Data",
+								"type": "DataFlowReference"
+							},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "ComputeOptimized"
+							}
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/AE Data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_AL003ICF')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "L2",
+					"referenceName": "Input_Data",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -26,17 +62,98 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "AL002_Dose_by_subject.csv",
+						"fileName": "AL003-1_Informed Consent.csv",
+						"folderPath": "AE Data/Screening Data",
 						"fileSystem": "raw"
 					},
-					"columnDelimiter": "|",
+					"columnDelimiter": ",",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
 				"schema": [
 					{
-						"name": "SUBJID|dose",
+						"name": "project",
+						"type": "String"
+					},
+					{
+						"name": "studyid",
+						"type": "String"
+					},
+					{
+						"name": "Subject",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "SiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "SiteGroup",
+						"type": "String"
+					},
+					{
+						"name": "InstanceName",
+						"type": "String"
+					},
+					{
+						"name": "InstanceRepeatNumber",
+						"type": "String"
+					},
+					{
+						"name": "FolderName",
+						"type": "String"
+					},
+					{
+						"name": "DataPageName",
+						"type": "String"
+					},
+					{
+						"name": "RecordPosition",
+						"type": "String"
+					},
+					{
+						"name": "SaveTS",
+						"type": "String"
+					},
+					{
+						"name": "ICDAT",
+						"type": "String"
+					},
+					{
+						"name": "ICTIM",
+						"type": "String"
+					},
+					{
+						"name": "ICDTTM",
+						"type": "String"
+					},
+					{
+						"name": "ICMONYR",
+						"type": "String"
+					},
+					{
+						"name": "ICYR",
+						"type": "String"
+					},
+					{
+						"name": "PROTOCOL",
+						"type": "String"
+					},
+					{
+						"name": "PROTOCOL_STD",
+						"type": "String"
+					},
+					{
+						"name": "ENCOHORT",
+						"type": "String"
+					},
+					{
+						"name": "ENCOHORT_STD",
 						"type": "String"
 					}
 				]
@@ -44,12 +161,12 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/Sink1')]",
+			"name": "[concat(parameters('factoryName'), '/DS_AL1011ICF')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"linkedServiceName": {
-					"referenceName": "L3",
+					"referenceName": "Input_Data",
 					"type": "LinkedServiceReference"
 				},
 				"annotations": [],
@@ -57,19 +174,106 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileSystem": "stage"
+						"fileName": "AL1011_ICF.csv",
+						"folderPath": "AE Data/Screening Data",
+						"fileSystem": "raw"
 					},
 					"columnDelimiter": ",",
 					"escapeChar": "\\",
 					"firstRowAsHeader": true,
 					"quoteChar": "\""
 				},
-				"schema": []
+				"schema": [
+					{
+						"name": "project",
+						"type": "String"
+					},
+					{
+						"name": "studyid",
+						"type": "String"
+					},
+					{
+						"name": "Subject",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "SiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "SiteGroup",
+						"type": "String"
+					},
+					{
+						"name": "InstanceName",
+						"type": "String"
+					},
+					{
+						"name": "InstanceRepeatNumber",
+						"type": "String"
+					},
+					{
+						"name": "FolderName",
+						"type": "String"
+					},
+					{
+						"name": "DataPageName",
+						"type": "String"
+					},
+					{
+						"name": "RecordPosition",
+						"type": "String"
+					},
+					{
+						"name": "SaveTS",
+						"type": "String"
+					},
+					{
+						"name": "ICDAT",
+						"type": "String"
+					},
+					{
+						"name": "ICTIM",
+						"type": "String"
+					},
+					{
+						"name": "ICDTTM",
+						"type": "String"
+					},
+					{
+						"name": "ICMONYR",
+						"type": "String"
+					},
+					{
+						"name": "ICYR",
+						"type": "String"
+					},
+					{
+						"name": "PROTOCOL",
+						"type": "String"
+					},
+					{
+						"name": "PROTOCOL_STD",
+						"type": "String"
+					},
+					{
+						"name": "ENCOHORT",
+						"type": "String"
+					},
+					{
+						"name": "ENCOHORT_STD",
+						"type": "String"
+					}
+				]
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/SinkAE')]",
+			"name": "[concat(parameters('factoryName'), '/DS_ICF_SINK')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -91,158 +295,543 @@
 				},
 				"schema": [
 					{
-						"name": "STUDYID",
+						"name": "project",
 						"type": "String"
 					},
 					{
-						"name": "SITEID",
+						"name": "studyid",
 						"type": "String"
 					},
 					{
-						"name": "SUBJID",
+						"name": "Subject",
 						"type": "String"
 					},
 					{
-						"name": "COHORT",
+						"name": "Site",
 						"type": "String"
 					},
 					{
-						"name": "VISIT",
+						"name": "SiteNumber",
 						"type": "String"
 					},
 					{
-						"name": "TPT",
+						"name": "SiteGroup",
 						"type": "String"
 					},
 					{
-						"name": "DAT",
+						"name": "InstanceName",
 						"type": "String"
 					},
 					{
-						"name": "TIM",
+						"name": "InstanceRepeatNumber",
 						"type": "String"
 					},
 					{
-						"name": "SPEC",
+						"name": "FolderName",
 						"type": "String"
 					},
 					{
-						"name": "TEST",
+						"name": "DataPageName",
 						"type": "String"
 					},
 					{
-						"name": "RESULT",
+						"name": "RecordPosition",
 						"type": "String"
 					},
 					{
-						"name": "UNIT",
+						"name": "SaveTS",
 						"type": "String"
 					},
 					{
-						"name": "LLOQ",
+						"name": "StudyEnvSiteNumber",
 						"type": "String"
 					},
 					{
-						"name": "COMMENT",
+						"name": "AETERM",
 						"type": "String"
 					},
 					{
-						"name": "Days",
+						"name": "AETERM_CoderDictName",
 						"type": "String"
 					},
 					{
-						"name": "RESULTS",
+						"name": "AETERM_CoderDictVersion",
 						"type": "String"
 					},
 					{
-						"name": "dose",
+						"name": "AETERM_HLGT",
 						"type": "String"
 					},
 					{
-						"name": "VisitHours",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Source1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Ls1",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL002-1_PROD_Icon_PK_SERUM_FULL_31102019.csv",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "STUDYID",
+						"name": "AETERM_HLGT_CODE",
 						"type": "String"
 					},
 					{
-						"name": "SITEID",
+						"name": "AETERM_HLT",
 						"type": "String"
 					},
 					{
-						"name": "SUBJID",
+						"name": "AETERM_HLT_CODE",
 						"type": "String"
 					},
 					{
-						"name": "COHORT",
+						"name": "AETERM_LLT",
 						"type": "String"
 					},
 					{
-						"name": "VISIT",
+						"name": "AETERM_LLT_CODE",
 						"type": "String"
 					},
 					{
-						"name": "TPT",
+						"name": "AETERM_PT",
 						"type": "String"
 					},
 					{
-						"name": "DAT",
+						"name": "AETERM_PT_CODE",
 						"type": "String"
 					},
 					{
-						"name": "TIM",
+						"name": "AETERM_SOC",
 						"type": "String"
 					},
 					{
-						"name": "SPEC",
+						"name": "AETERM_SOC_CODE",
 						"type": "String"
 					},
 					{
-						"name": "TEST",
+						"name": "AESTDAT",
 						"type": "String"
 					},
 					{
-						"name": "RESULT",
+						"name": "AESTDAT_C",
 						"type": "String"
 					},
 					{
-						"name": "UNIT",
+						"name": "AESTDAT_Y",
 						"type": "String"
 					},
 					{
-						"name": "LLOQ",
+						"name": "AESTDAT_M",
 						"type": "String"
 					},
 					{
-						"name": "COMMENT",
+						"name": "AESTDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIM",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIMU",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIM",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIMU",
+						"type": "String"
+					},
+					{
+						"name": "AESEV",
+						"type": "String"
+					},
+					{
+						"name": "AESEV_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEPATT",
+						"type": "String"
+					},
+					{
+						"name": "AEPATT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEREL",
+						"type": "String"
+					},
+					{
+						"name": "AEREL_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEACN",
+						"type": "String"
+					},
+					{
+						"name": "AEACN_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEACNOTH",
+						"type": "String"
+					},
+					{
+						"name": "AESAE",
+						"type": "String"
+					},
+					{
+						"name": "AESAE_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO",
+						"type": "String"
+					},
+					{
+						"name": "CMNO_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO2",
+						"type": "String"
+					},
+					{
+						"name": "CMNO2_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO3",
+						"type": "String"
+					},
+					{
+						"name": "CMNO3_CV",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_C",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_Y",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_M",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_D",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_C",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_M",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_D",
+						"type": "String"
+					},
+					{
+						"name": "AESPID",
+						"type": "String"
+					},
+					{
+						"name": "AESLIF",
+						"type": "String"
+					},
+					{
+						"name": "AESDIS",
+						"type": "String"
+					},
+					{
+						"name": "AESCON",
+						"type": "String"
+					},
+					{
+						"name": "AESMI",
+						"type": "String"
+					},
+					{
+						"name": "AESDEATH",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "DTHCAUS",
+						"type": "String"
+					},
+					{
+						"name": "DTHCERT",
+						"type": "String"
+					},
+					{
+						"name": "DTHCERT_CV",
+						"type": "String"
+					},
+					{
+						"name": "DTHAUT",
+						"type": "String"
+					},
+					{
+						"name": "DTHAUT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEHOSP",
+						"type": "String"
+					},
+					{
+						"name": "HOSPTYP",
+						"type": "String"
+					},
+					{
+						"name": "HOSPTYP_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AEALPSS",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIMUNK",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIMUNK",
+						"type": "String"
+					},
+					{
+						"name": "AESEV_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESER",
+						"type": "String"
+					},
+					{
+						"name": "AESER_STD",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR1",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR2",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR3",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR4",
+						"type": "String"
+					},
+					{
+						"name": "AESDTH",
+						"type": "String"
+					},
+					{
+						"name": "AESLIFE",
+						"type": "String"
+					},
+					{
+						"name": "AESHOSP",
+						"type": "String"
+					},
+					{
+						"name": "AESDISAB",
+						"type": "String"
+					},
+					{
+						"name": "AESCONG",
+						"type": "String"
+					},
+					{
+						"name": "AESMIE",
+						"type": "String"
+					},
+					{
+						"name": "AEREL_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEACN_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHNO",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHMD",
+						"type": "String"
+					},
+					{
+						"name": "AEMED",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHOT",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEDIS",
+						"type": "String"
+					},
+					{
+						"name": "AEDIS_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESTDTTM",
+						"type": "String"
+					},
+					{
+						"name": "AEENDTTM",
+						"type": "String"
+					},
+					{
+						"name": "AEDLAE",
+						"type": "String"
+					},
+					{
+						"name": "AEDLAE_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESI",
+						"type": "String"
+					},
+					{
+						"name": "AESI_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESTDATnew",
+						"type": "String"
+					},
+					{
+						"name": "AESTDATnew1",
 						"type": "String"
 					}
 				]
@@ -302,105 +891,6 @@
 					"script": "source(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AdverseEventsData\nsource(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL0031AdverseEvent\nsource(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL0012AE\nAdverseEventsData, AL0031AdverseEvent, AL0012AE union(byName: true,\n\tpartitionBy('hash', 1))~> Union1\nUnion1 derive(AESTDATnew = iif(equals(instr(trim(AESTDAT),'UN'),1),concat('1-',substring(trim(AESTDAT),4,length(AESTDAT))),trim(AESTDAT))) ~> AESTDAtnew\nAESTDAtnew derive(AESTDATnew1 = iif(greater(instr(AESTDATnew,'0:00'),1),toString(toDate(AESTDATnew, 'MM/dd/yyyy'), 'dd-MMM-yyyy'),trim(AESTDATnew))) ~> AESTDATnew1\nAESTDATnew1 sink(input(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string,\n\t\tDays as string,\n\t\tRESULTS as string,\n\t\tdose as string,\n\t\tVisitHours as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['ADL.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinalOutput"
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/SinkAE')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow1')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "Source1",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						},
-						{
-							"dataset": {
-								"referenceName": "S2",
-								"type": "DatasetReference"
-							},
-							"name": "source2"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "Sink1",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Join1"
-						}
-					],
-					"script": "source(output(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> source1\nsource(output(\n\t\tSUBJID as string,\n\t\tdose as double '000,000,000.000'\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tinferDriftedColumnTypes: true) ~> source2\nsource1, source2 join(source1@SUBJID == source2@SUBJID,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 sink(allowSchemaDrift: true,\n\tvalidateSchema: false,\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> sink1"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Source1')]",
-				"[concat(variables('factoryId'), '/datasets/S2')]",
-				"[concat(variables('factoryId'), '/datasets/Sink1')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "Input_Source",
-								"type": "DatasetReference"
-							},
-							"name": "AL002Prod"
-						},
-						{
-							"dataset": {
-								"referenceName": "Input_Dose",
-								"type": "DatasetReference"
-							},
-							"name": "AL002Dose"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "FinalOutputFile_DS",
-								"type": "DatasetReference"
-							},
-							"name": "FinalOutputFile"
-						}
-					],
-					"transformations": [
-						{
-							"name": "Days"
-						},
-						{
-							"name": "RESULTS"
-						},
-						{
-							"name": "VisitHours"
-						},
-						{
-							"name": "Join1"
-						}
-					],
-					"script": "source(output(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL002Prod\nsource(output(\n\t\tSUBJID as string,\n\t\tdose as double\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL002Dose\nAL002Prod derive(Days = toInteger(trim(substring(VISIT,4,length(VISIT)-3)))) ~> Days\nDays derive(RESULTS = iif(lesserOrEqual(toFloat(replace(RESULT,'<','')),20.0),divide(toFloat(LLOQ),2),toFloat(replace(RESULT,'<','')))) ~> RESULTS\nRESULTS derive(VisitHours = case(trim(TPT) == \"Predose\", 0,trim(TPT) == \"End of Infusion (EOI)\",1,isNull(trim(TPT)),minus(multiply(Days,24),24),toInteger(rtrim(trim(TPT),\"hr\")))) ~> VisitHours\nAL002Dose, VisitHours join(AL002Dose@SUBJID == AL002Prod@SUBJID,\n\tjoinType:'inner',\n\tbroadcast: 'auto')~> Join1\nJoin1 sink(input(\n\t\tSTUDYID as string,\n\t\tSITEID as string,\n\t\tSUBJID as string,\n\t\tCOHORT as string,\n\t\tVISIT as string,\n\t\tTPT as string,\n\t\tDAT as string,\n\t\tTIM as string,\n\t\tSPEC as string,\n\t\tTEST as string,\n\t\tRESULT as string,\n\t\tUNIT as string,\n\t\tLLOQ as string,\n\t\tCOMMENT as string,\n\t\tdose as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['RemovingColumns.csv'],\n\tmapColumn(\n\t\tSTUDYID,\n\t\tSITEID,\n\t\tVISIT,\n\t\tTPT,\n\t\tDAT,\n\t\tTIM,\n\t\tSPEC,\n\t\tTEST,\n\t\tRESULT,\n\t\tUNIT,\n\t\tLLOQ,\n\t\tCOMMENT,\n\t\tdose\n\t),\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinalOutputFile"
-				}
-			},
 			"dependsOn": []
 		},
 		{
@@ -449,136 +939,10 @@
 					"script": "source(output(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tICDAT as string,\n\t\tICTIM as string,\n\t\tICDTTM as string,\n\t\tICMONYR as string,\n\t\tICYR as string,\n\t\tPROTOCOL as string,\n\t\tPROTOCOL_STD as string,\n\t\tENCOHORT as string,\n\t\tENCOHORT_STD as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL0031ICF\nsource(output(\n\t\tuserid as string,\n\t\tprojectid as string,\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tenvironmentName as string,\n\t\tsubjectId as string,\n\t\tStudySiteId as string,\n\t\tSubject as string,\n\t\tsiteid as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tinstanceId as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tfolderid as string,\n\t\tFolder as string,\n\t\tFolderName as string,\n\t\tFolderSeq as string,\n\t\tTargetDays as string,\n\t\tDataPageId as string,\n\t\tDataPageName as string,\n\t\tPageRepeatNumber as string,\n\t\tRecordDate as string,\n\t\tRecordId as string,\n\t\tRecordPosition as string,\n\t\tMinCreated as string,\n\t\tMaxUpdated as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tEPOCH as string,\n\t\tEPOCH_CV as string,\n\t\tPROTMLST as string,\n\t\tPROTMLST_CV as string,\n\t\tDSSTDAT as string,\n\t\tDSSTDAT_C as string,\n\t\tDSSTDAT_Y as string,\n\t\tDSSTDAT_M as string,\n\t\tDSSTDAT_D as string,\n\t\tDSOPT as string,\n\t\tDSOPT_CV as string,\n\t\tDSSFT as string,\n\t\tDSSFT_CV as string,\n\t\tDSFUS1 as string,\n\t\tDSFUS1_CV as string,\n\t\tDSST3DAT as string,\n\t\tDSST3DAT_C as string,\n\t\tDSST3DAT_Y as string,\n\t\tDSST3DAT_M as string,\n\t\tDSST3DAT_D as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false) ~> AL1011ICF\nAL0031ICF derive(Date = trim(ICDAT)) ~> DerivedColumn1\nAL1011ICF derive(Date = trim(DSSTDAT_C)) ~> DerivedColumn2\nDerivedColumn1, DerivedColumn2 union(byName: true,\n\tpartitionBy('hash', 1))~> Union\nUnion sink(input(\n\t\tproject as string,\n\t\tstudyid as string,\n\t\tSubject as string,\n\t\tSite as string,\n\t\tSiteNumber as string,\n\t\tSiteGroup as string,\n\t\tInstanceName as string,\n\t\tInstanceRepeatNumber as string,\n\t\tFolderName as string,\n\t\tDataPageName as string,\n\t\tRecordPosition as string,\n\t\tSaveTS as string,\n\t\tStudyEnvSiteNumber as string,\n\t\tAETERM as string,\n\t\tAETERM_CoderDictName as string,\n\t\tAETERM_CoderDictVersion as string,\n\t\tAETERM_HLGT as string,\n\t\tAETERM_HLGT_CODE as string,\n\t\tAETERM_HLT as string,\n\t\tAETERM_HLT_CODE as string,\n\t\tAETERM_LLT as string,\n\t\tAETERM_LLT_CODE as string,\n\t\tAETERM_PT as string,\n\t\tAETERM_PT_CODE as string,\n\t\tAETERM_SOC as string,\n\t\tAETERM_SOC_CODE as string,\n\t\tAESTDAT as string,\n\t\tAESTDAT_C as string,\n\t\tAESTDAT_Y as string,\n\t\tAESTDAT_M as string,\n\t\tAESTDAT_D as string,\n\t\tAESTTIM as string,\n\t\tAESTTIMU as string,\n\t\tAEONGO as string,\n\t\tAEONGO_CV as string,\n\t\tAEENDAT as string,\n\t\tAEENDAT_C as string,\n\t\tAEENDAT_Y as string,\n\t\tAEENDAT_M as string,\n\t\tAEENDAT_D as string,\n\t\tAEENTIM as string,\n\t\tAEENTIMU as string,\n\t\tAESEV as string,\n\t\tAESEV_CV as string,\n\t\tAEOUT as string,\n\t\tAEOUT_CV as string,\n\t\tAEPATT as string,\n\t\tAEPATT_CV as string,\n\t\tAEREL as string,\n\t\tAEREL_CV as string,\n\t\tAEACN as string,\n\t\tAEACN_CV as string,\n\t\tAEACNOTH as string,\n\t\tAESAE as string,\n\t\tAESAE_CV as string,\n\t\tCMNO as string,\n\t\tCMNO_CV as string,\n\t\tCMNO2 as string,\n\t\tCMNO2_CV as string,\n\t\tCMNO3 as string,\n\t\tCMNO3_CV as string,\n\t\tAESTDF as string,\n\t\tAESTDF_C as string,\n\t\tAESTDF_Y as string,\n\t\tAESTDF_M as string,\n\t\tAESTDF_D as string,\n\t\tAEENDF as string,\n\t\tAEENDF_C as string,\n\t\tAEENDF_Y as string,\n\t\tAEENDF_M as string,\n\t\tAEENDF_D as string,\n\t\tAESPID as string,\n\t\tAESLIF as string,\n\t\tAESDIS as string,\n\t\tAESCON as string,\n\t\tAESMI as string,\n\t\tAESDEATH as string,\n\t\tDTHDAT as string,\n\t\tDTHDAT_C as string,\n\t\tDTHDAT_Y as string,\n\t\tDTHDAT_M as string,\n\t\tDTHDAT_D as string,\n\t\tDTHCAUS as string,\n\t\tDTHCERT as string,\n\t\tDTHCERT_CV as string,\n\t\tDTHAUT as string,\n\t\tDTHAUT_CV as string,\n\t\tAEHOSP as string,\n\t\tHOSPTYP as string,\n\t\tHOSPTYP_CV as string,\n\t\tAEHODAT as string,\n\t\tAEHODAT_C as string,\n\t\tAEHODAT_Y as string,\n\t\tAEHODAT_M as string,\n\t\tAEHODAT_D as string,\n\t\tAEHDDAT as string,\n\t\tAEHDDAT_C as string,\n\t\tAEHDDAT_Y as string,\n\t\tAEHDDAT_M as string,\n\t\tAEHDDAT_D as string,\n\t\tAEALPSS as string,\n\t\tAESTTIMUNK as string,\n\t\tAEONGO_STD as string,\n\t\tAEENTIMUNK as string,\n\t\tAESEV_STD as string,\n\t\tAESER as string,\n\t\tAESER_STD as string,\n\t\tSAENAR as string,\n\t\tSAENAR1 as string,\n\t\tSAENAR2 as string,\n\t\tSAENAR3 as string,\n\t\tSAENAR4 as string,\n\t\tAESDTH as string,\n\t\tAESLIFE as string,\n\t\tAESHOSP as string,\n\t\tAESDISAB as string,\n\t\tAESCONG as string,\n\t\tAESMIE as string,\n\t\tAEREL_STD as string,\n\t\tAEACN_STD as string,\n\t\tAEOTHNO as string,\n\t\tAEOTHMD as string,\n\t\tAEMED as string,\n\t\tAEOTHOT as string,\n\t\tAEOUT_STD as string,\n\t\tAEDIS as string,\n\t\tAEDIS_STD as string,\n\t\tAESTDTTM as string,\n\t\tAEENDTTM as string,\n\t\tAEDLAE as string,\n\t\tAEDLAE_STD as string,\n\t\tAESI as string,\n\t\tAESI_STD as string,\n\t\tAESTDATnew as string,\n\t\tAESTDATnew1 as string\n\t),\n\tallowSchemaDrift: true,\n\tvalidateSchema: false,\n\tpartitionFileNames:['FinalICF.csv'],\n\tpartitionBy('hash', 1),\n\tskipDuplicateMapInputs: true,\n\tskipDuplicateMapOutputs: true) ~> FinalICFData"
 				}
 			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DL_DL_AL002_Raw_Stage')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ADL002_BioMarker",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow2",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"AL002Prod": {},
-									"AL002Dose": {},
-									"FinalOutputFile": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DL_DL_AL002_Raw_Stage_copy1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "ADL002_BioMarker_copy",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "dataflow2",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"AL002Prod": {},
-									"AL002Dose": {},
-									"FinalOutputFile": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/dataflow2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/pipeline1')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "dataflow3",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "AE Data",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"AdverseEventsData": {},
-									"AL0031AdverseEvent": {},
-									"AL0012AE": {},
-									"FinalOutput": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "ComputeOptimized"
-							}
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/AE Data')]"
+				"[concat(variables('factoryId'), '/datasets/DS_AL003ICF')]",
+				"[concat(variables('factoryId'), '/datasets/DS_AL1011ICF')]",
+				"[concat(variables('factoryId'), '/datasets/DS_ICF_SINK')]"
 			]
 		},
 		{
@@ -602,15 +966,8 @@
 						"typeProperties": {
 							"dataflow": {
 								"referenceName": "DF_ICF",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"AL0031ICF": {},
-									"AL1011ICF": {},
-									"FinalICFData": {}
-								}
+								"type": "DataFlowReference"
 							},
-							"staging": {},
 							"compute": {
 								"coreCount": 8,
 								"computeType": "ComputeOptimized"

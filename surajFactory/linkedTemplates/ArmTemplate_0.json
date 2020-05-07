@@ -255,6 +255,234 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_AL003ICF')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Input_Data",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL003-1_Informed Consent.csv",
+						"folderPath": "AE Data/Screening Data",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "project",
+						"type": "String"
+					},
+					{
+						"name": "studyid",
+						"type": "String"
+					},
+					{
+						"name": "Subject",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "SiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "SiteGroup",
+						"type": "String"
+					},
+					{
+						"name": "InstanceName",
+						"type": "String"
+					},
+					{
+						"name": "InstanceRepeatNumber",
+						"type": "String"
+					},
+					{
+						"name": "FolderName",
+						"type": "String"
+					},
+					{
+						"name": "DataPageName",
+						"type": "String"
+					},
+					{
+						"name": "RecordPosition",
+						"type": "String"
+					},
+					{
+						"name": "SaveTS",
+						"type": "String"
+					},
+					{
+						"name": "ICDAT",
+						"type": "String"
+					},
+					{
+						"name": "ICTIM",
+						"type": "String"
+					},
+					{
+						"name": "ICDTTM",
+						"type": "String"
+					},
+					{
+						"name": "ICMONYR",
+						"type": "String"
+					},
+					{
+						"name": "ICYR",
+						"type": "String"
+					},
+					{
+						"name": "PROTOCOL",
+						"type": "String"
+					},
+					{
+						"name": "PROTOCOL_STD",
+						"type": "String"
+					},
+					{
+						"name": "ENCOHORT",
+						"type": "String"
+					},
+					{
+						"name": "ENCOHORT_STD",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Input_Data')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_AL1011ICF')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Input_Data",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": "AL1011_ICF.csv",
+						"folderPath": "AE Data/Screening Data",
+						"fileSystem": "raw"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "project",
+						"type": "String"
+					},
+					{
+						"name": "studyid",
+						"type": "String"
+					},
+					{
+						"name": "Subject",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "SiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "SiteGroup",
+						"type": "String"
+					},
+					{
+						"name": "InstanceName",
+						"type": "String"
+					},
+					{
+						"name": "InstanceRepeatNumber",
+						"type": "String"
+					},
+					{
+						"name": "FolderName",
+						"type": "String"
+					},
+					{
+						"name": "DataPageName",
+						"type": "String"
+					},
+					{
+						"name": "RecordPosition",
+						"type": "String"
+					},
+					{
+						"name": "SaveTS",
+						"type": "String"
+					},
+					{
+						"name": "ICDAT",
+						"type": "String"
+					},
+					{
+						"name": "ICTIM",
+						"type": "String"
+					},
+					{
+						"name": "ICDTTM",
+						"type": "String"
+					},
+					{
+						"name": "ICMONYR",
+						"type": "String"
+					},
+					{
+						"name": "ICYR",
+						"type": "String"
+					},
+					{
+						"name": "PROTOCOL",
+						"type": "String"
+					},
+					{
+						"name": "PROTOCOL_STD",
+						"type": "String"
+					},
+					{
+						"name": "ENCOHORT",
+						"type": "String"
+					},
+					{
+						"name": "ENCOHORT_STD",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Input_Data')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_AzureSQLRAM')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -270,6 +498,574 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/LS_Ram_AzureSQL')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_ICF_SINK')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "Output_Data",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileSystem": "stage"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "project",
+						"type": "String"
+					},
+					{
+						"name": "studyid",
+						"type": "String"
+					},
+					{
+						"name": "Subject",
+						"type": "String"
+					},
+					{
+						"name": "Site",
+						"type": "String"
+					},
+					{
+						"name": "SiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "SiteGroup",
+						"type": "String"
+					},
+					{
+						"name": "InstanceName",
+						"type": "String"
+					},
+					{
+						"name": "InstanceRepeatNumber",
+						"type": "String"
+					},
+					{
+						"name": "FolderName",
+						"type": "String"
+					},
+					{
+						"name": "DataPageName",
+						"type": "String"
+					},
+					{
+						"name": "RecordPosition",
+						"type": "String"
+					},
+					{
+						"name": "SaveTS",
+						"type": "String"
+					},
+					{
+						"name": "StudyEnvSiteNumber",
+						"type": "String"
+					},
+					{
+						"name": "AETERM",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_CoderDictName",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_CoderDictVersion",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLGT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLGT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_HLT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_LLT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_LLT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_PT",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_PT_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_SOC",
+						"type": "String"
+					},
+					{
+						"name": "AETERM_SOC_CODE",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AESTDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIM",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIMU",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AEENDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIM",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIMU",
+						"type": "String"
+					},
+					{
+						"name": "AESEV",
+						"type": "String"
+					},
+					{
+						"name": "AESEV_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEPATT",
+						"type": "String"
+					},
+					{
+						"name": "AEPATT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEREL",
+						"type": "String"
+					},
+					{
+						"name": "AEREL_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEACN",
+						"type": "String"
+					},
+					{
+						"name": "AEACN_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEACNOTH",
+						"type": "String"
+					},
+					{
+						"name": "AESAE",
+						"type": "String"
+					},
+					{
+						"name": "AESAE_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO",
+						"type": "String"
+					},
+					{
+						"name": "CMNO_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO2",
+						"type": "String"
+					},
+					{
+						"name": "CMNO2_CV",
+						"type": "String"
+					},
+					{
+						"name": "CMNO3",
+						"type": "String"
+					},
+					{
+						"name": "CMNO3_CV",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_C",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_Y",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_M",
+						"type": "String"
+					},
+					{
+						"name": "AESTDF_D",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_C",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_M",
+						"type": "String"
+					},
+					{
+						"name": "AEENDF_D",
+						"type": "String"
+					},
+					{
+						"name": "AESPID",
+						"type": "String"
+					},
+					{
+						"name": "AESLIF",
+						"type": "String"
+					},
+					{
+						"name": "AESDIS",
+						"type": "String"
+					},
+					{
+						"name": "AESCON",
+						"type": "String"
+					},
+					{
+						"name": "AESMI",
+						"type": "String"
+					},
+					{
+						"name": "AESDEATH",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "DTHDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "DTHCAUS",
+						"type": "String"
+					},
+					{
+						"name": "DTHCERT",
+						"type": "String"
+					},
+					{
+						"name": "DTHCERT_CV",
+						"type": "String"
+					},
+					{
+						"name": "DTHAUT",
+						"type": "String"
+					},
+					{
+						"name": "DTHAUT_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEHOSP",
+						"type": "String"
+					},
+					{
+						"name": "HOSPTYP",
+						"type": "String"
+					},
+					{
+						"name": "HOSPTYP_CV",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AEHODAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_C",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_Y",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_M",
+						"type": "String"
+					},
+					{
+						"name": "AEHDDAT_D",
+						"type": "String"
+					},
+					{
+						"name": "AEALPSS",
+						"type": "String"
+					},
+					{
+						"name": "AESTTIMUNK",
+						"type": "String"
+					},
+					{
+						"name": "AEONGO_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEENTIMUNK",
+						"type": "String"
+					},
+					{
+						"name": "AESEV_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESER",
+						"type": "String"
+					},
+					{
+						"name": "AESER_STD",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR1",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR2",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR3",
+						"type": "String"
+					},
+					{
+						"name": "SAENAR4",
+						"type": "String"
+					},
+					{
+						"name": "AESDTH",
+						"type": "String"
+					},
+					{
+						"name": "AESLIFE",
+						"type": "String"
+					},
+					{
+						"name": "AESHOSP",
+						"type": "String"
+					},
+					{
+						"name": "AESDISAB",
+						"type": "String"
+					},
+					{
+						"name": "AESCONG",
+						"type": "String"
+					},
+					{
+						"name": "AESMIE",
+						"type": "String"
+					},
+					{
+						"name": "AEREL_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEACN_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHNO",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHMD",
+						"type": "String"
+					},
+					{
+						"name": "AEMED",
+						"type": "String"
+					},
+					{
+						"name": "AEOTHOT",
+						"type": "String"
+					},
+					{
+						"name": "AEOUT_STD",
+						"type": "String"
+					},
+					{
+						"name": "AEDIS",
+						"type": "String"
+					},
+					{
+						"name": "AEDIS_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESTDTTM",
+						"type": "String"
+					},
+					{
+						"name": "AEENDTTM",
+						"type": "String"
+					},
+					{
+						"name": "AEDLAE",
+						"type": "String"
+					},
+					{
+						"name": "AEDLAE_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESI",
+						"type": "String"
+					},
+					{
+						"name": "AESI_STD",
+						"type": "String"
+					},
+					{
+						"name": "AESTDATnew",
+						"type": "String"
+					},
+					{
+						"name": "AESTDATnew1",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/Output_Data')]"
 			]
 		},
 		{
@@ -1574,166 +2370,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/Input_Data')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/S2')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "L2",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "AL002_Dose_by_subject.csv",
-						"fileSystem": "raw"
-					},
-					"columnDelimiter": "|",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "SUBJID|dose",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/L2')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Sink1')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "L3",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "stage"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/L3')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/SinkAE')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Output_Data",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileSystem": "stage"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "STUDYID",
-						"type": "String"
-					},
-					{
-						"name": "SITEID",
-						"type": "String"
-					},
-					{
-						"name": "SUBJID",
-						"type": "String"
-					},
-					{
-						"name": "COHORT",
-						"type": "String"
-					},
-					{
-						"name": "VISIT",
-						"type": "String"
-					},
-					{
-						"name": "TPT",
-						"type": "String"
-					},
-					{
-						"name": "DAT",
-						"type": "String"
-					},
-					{
-						"name": "TIM",
-						"type": "String"
-					},
-					{
-						"name": "SPEC",
-						"type": "String"
-					},
-					{
-						"name": "TEST",
-						"type": "String"
-					},
-					{
-						"name": "RESULT",
-						"type": "String"
-					},
-					{
-						"name": "UNIT",
-						"type": "String"
-					},
-					{
-						"name": "LLOQ",
-						"type": "String"
-					},
-					{
-						"name": "COMMENT",
-						"type": "String"
-					},
-					{
-						"name": "Days",
-						"type": "String"
-					},
-					{
-						"name": "RESULTS",
-						"type": "String"
-					},
-					{
-						"name": "dose",
-						"type": "String"
-					},
-					{
-						"name": "VisitHours",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Output_Data')]"
 			]
 		}
 	]
