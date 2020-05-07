@@ -1,0 +1,109 @@
+{
+	"name": "DS_AL1011ICF",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Input_Data",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "AL1011_ICF.csv",
+				"folderPath": "AE Data/Screening Data",
+				"fileSystem": "raw"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "project",
+				"type": "String"
+			},
+			{
+				"name": "studyid",
+				"type": "String"
+			},
+			{
+				"name": "Subject",
+				"type": "String"
+			},
+			{
+				"name": "Site",
+				"type": "String"
+			},
+			{
+				"name": "SiteNumber",
+				"type": "String"
+			},
+			{
+				"name": "SiteGroup",
+				"type": "String"
+			},
+			{
+				"name": "InstanceName",
+				"type": "String"
+			},
+			{
+				"name": "InstanceRepeatNumber",
+				"type": "String"
+			},
+			{
+				"name": "FolderName",
+				"type": "String"
+			},
+			{
+				"name": "DataPageName",
+				"type": "String"
+			},
+			{
+				"name": "RecordPosition",
+				"type": "String"
+			},
+			{
+				"name": "SaveTS",
+				"type": "String"
+			},
+			{
+				"name": "ICDAT",
+				"type": "String"
+			},
+			{
+				"name": "ICTIM",
+				"type": "String"
+			},
+			{
+				"name": "ICDTTM",
+				"type": "String"
+			},
+			{
+				"name": "ICMONYR",
+				"type": "String"
+			},
+			{
+				"name": "ICYR",
+				"type": "String"
+			},
+			{
+				"name": "PROTOCOL",
+				"type": "String"
+			},
+			{
+				"name": "PROTOCOL_STD",
+				"type": "String"
+			},
+			{
+				"name": "ENCOHORT",
+				"type": "String"
+			},
+			{
+				"name": "ENCOHORT_STD",
+				"type": "String"
+			}
+		]
+	}
+}
