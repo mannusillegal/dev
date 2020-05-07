@@ -1,5 +1,5 @@
 {
-	"name": "dataflow3",
+	"name": "DF_ICF",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
